@@ -2,6 +2,12 @@
 
 A starter template for Python packages.
 
+#### Setup
+
+```
+python setup.py install
+```
+
 #### Features
 
 Starter comes with a built in command line interface:
