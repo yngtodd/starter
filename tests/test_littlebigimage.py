@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-"""Tests for `starter` package."""
 # pylint: disable=redefined-outer-name
 
 import pytest
-
 
 
 @pytest.fixture

@@ -1,17 +1,3 @@
-<h1>Starter<img src='https://github.com/yngtodd/starter/blob/main/img/snek.png' align='right' width='180' height='104'></h1>
+# LittleBigImage
 
-A starter template for Python packages.
-
-#### Setup
-
-```
-python setup.py install
-```
-
-#### Features
-
-Starter comes with a built in command line interface:
-
-```python
-python -m starter.cli greet
-```
+LittleBigImage is a Python library that uses PyTorch and U-Nets to compress massive 3D images.

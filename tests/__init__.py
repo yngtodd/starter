@@ -1,1 +1,1 @@
-"""Unit test package for starter."""
+"""Unit test package for littlebigimage."""

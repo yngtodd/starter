@@ -7,16 +7,11 @@ with open('README.md') as readme_file:
 
 setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
-requirements = ['argh',]
-
-
-COMMANDS = [
-    'greet = starter.cli:greet',
-]
+requirements = []
 
 
 setup(
-    author="",
+    author="MDA Group",
     author_email="",
     python_requires='>=3.6',
     classifiers=[
@@ -29,18 +24,17 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="A starter template for Python packages.",
-    entry_points={'console_scripts': COMMANDS},
     install_requires=requirements,
     license="MIT license",
     long_description=readme,
     include_package_data=True,
-    keywords='starter',
-    name='starter',
+    keywords='littlebigimage',
+    name='littlebigimage',
     packages=find_packages(include=['starter', 'starter.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/yngtodd/starter',
+    url="https://code.ornl.gov/neuroimaging/littlebigimage"
     version='0.1.0',
     zip_safe=False,
 )
