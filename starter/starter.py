@@ -8,7 +8,7 @@ from configuration.configuration import Configuration
 logger = logging.getLogger('Main')
 
 
-def _setup_log(log_path: str = 'logs/default.log', debug: bool = False) -> None:
+def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> None:
     log_path = log_path.split(os.sep)
     if len(log_path) > 1:
 
