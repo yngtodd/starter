@@ -67,6 +67,7 @@ def main():
     args = _argparser()
     _setup_log(args.log, args.debug)
     # Load the configuration
+    # configuration = Configuration(config_src=args.config_file, config_schema_path='yml_schema_strict.json')
     configuration = Configuration(config_src=args.config_file)
     # Prints
     logger.info("Started with args: %s" % args)
