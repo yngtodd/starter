@@ -3,8 +3,11 @@ from jsonschema.exceptions import ValidationError
 from typing import Dict
 import logging
 import os
+import sys
 
-from configuration.configuration import Configuration
+from starter.configuration.configuration import Configuration
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 logger = logging.getLogger('TestConfiguration')
 

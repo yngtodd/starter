@@ -23,10 +23,10 @@ test_requirements = []
 
 COMMANDS = [
     'greet = starter.cli:greet',
-    'starter = starter.starter:main'
+    'starter_main = starter.main:main'
 ]
 
-data_files = ['configuration/yml_schema.json']
+data_files = ['starter/configuration/yml_schema.json']
 
 setup(
     author="drkostas",
@@ -51,7 +51,7 @@ setup(
     keywords='starter',
     name='starter',
     # package_dir={'': '.'},
-    packages=find_packages(include=['starter', 'starter.*', 'configuration']),
+    packages=find_packages(include=['starter', 'starter.*']),
     # py_modules=['main'],
     setup_requires=setup_requirements,
     test_suite='tests',

@@ -3,7 +3,7 @@ import logging
 import argparse
 import os
 
-from configuration.configuration import Configuration
+from starter.configuration.configuration import Configuration
 
 logger = logging.getLogger('Main')
 
