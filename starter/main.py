@@ -4,9 +4,10 @@ import argparse
 import os
 import time
 
+from starter.fancy_log.colorized_log import ColorizedLog
 from starter.configuration.configuration import Configuration
 
-logger = logging.getLogger('Main')
+logger = ColorizedLog(logging.getLogger('Main'), 'yellow')
 
 
 def timeit(method):

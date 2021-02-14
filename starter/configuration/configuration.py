@@ -8,7 +8,9 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
-logger = logging.getLogger('Configuration')
+from starter.fancy_log.colorized_log import ColorizedLog
+
+logger = ColorizedLog(logging.getLogger('Configuration'), 'green')
 
 
 class Configuration:
@@ -42,6 +44,7 @@ class Configuration:
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         self.config_keys = [key for key in self.config.keys() if key != 'tag']
+        logger.info("Configuration file loaded successfully")
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
