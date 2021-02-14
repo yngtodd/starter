@@ -109,6 +109,20 @@ class TestConfiguration(unittest.TestCase):
                          'tag': 'CHANGED VALUE'}
         self.assertDictEqual(self._sort_dict(expected_json), self._sort_dict(modified_configuration.to_json()))
 
+    def test_get_config(self):
+        logger.info('Loading Configuration..')
+        configuration = Configuration(config_src=os.path.join(self.test_data_path, 'minimal_conf_correct.yml'),
+                                      config_schema_path=os.path.join(self.test_data_path,
+                                                                      'minimal_yml_schema.json'))
+        cloudstore_config = configuration.get_config(config_name='cloudstore')
+        expected_json = [{
+            'subproperty1': 1,
+            'subproperty2': [123, 234]
+        }]
+        # Compare
+        logger.info('Comparing the results..')
+        self.assertListEqual(expected_json, cloudstore_config)
+
     @classmethod
     def _sort_dict(cls, dictionary: Dict) -> Dict:
         return {k: cls._sort_dict(v) if isinstance(v, dict) else v

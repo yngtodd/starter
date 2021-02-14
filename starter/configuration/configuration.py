@@ -28,8 +28,9 @@ class Configuration:
         """
        The basic constructor. Creates a new instance of the Configuration class.
 
-        :param config_src:
-        :param config_schema_path:
+        Args:
+            config_src: The path, file or StringIO object of the configuration to load
+            config_schema_path: The path, file or StringIO object of the configuration validation file
         """
 
         # Load the predefined schema of the configuration
@@ -48,6 +49,16 @@ class Configuration:
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
+        """
+        Loads the configuration schema file
+
+        Args:
+            config_schema_path: The path of the config schema
+
+        Returns:
+            configuration_schema: The loaded config schema
+        """
+
         if config_schema_path[0] != os.sep:
             config_schema_path = '/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])
         with open(config_schema_path) as f:
@@ -56,6 +67,16 @@ class Configuration:
 
     @staticmethod
     def load_yml(config_src: Union[TextIOWrapper, StringIO, str], env_tag: str, env_pattern: str) -> Tuple[Dict, str]:
+        """
+        Loads the configuration file
+        Args:
+            config_src: The path of the configuration
+            env_tag: The tag that distinguishes the env variables
+            env_pattern: The regex for finding the env variables
+
+        Returns:
+            config, config_path
+        """
         pattern = re.compile(env_pattern)
         loader = yaml.SafeLoader
         loader.add_implicit_resolver(env_tag, pattern, None)
@@ -99,6 +120,16 @@ class Configuration:
         return config, config_path
 
     def get_config(self, config_name) -> List:
+        """
+        Returns the subconfig requested
+
+        Args:
+            config_name: The name of the subconfig
+
+        Returns:
+            sub_config: The sub_configs List
+        """
+
         if config_name in self.config.keys():
             return self.config[config_name]
         else:
@@ -108,9 +139,10 @@ class Configuration:
         """
         Writes the configuration to a stream. For example a file.
 
-        :param fn:
-        :param include_tag:
-        :return: None
+        Args:
+            fn:
+
+        Returns:
         """
 
         self.config['tag'] = self.tag
@@ -125,6 +157,12 @@ class Configuration:
     to_yaml = to_yml
 
     def to_json(self) -> Dict:
+        """
+        Returns the whole config file
+
+        Returns:
+
+        """
         return self.config
 
     # def __getitem__(self, item):

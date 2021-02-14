@@ -10,7 +10,13 @@ from starter.configuration.configuration import Configuration
 logger = ColorizedLog(logging.getLogger('Main'), 'yellow')
 
 
-def timeit(method):
+def timeit(method: object) -> object:
+    """Decorator for counting the execution times of functions
+
+    Args:
+        method (object):
+    """
+
     def timed(*args, **kw):
         ts = time.time()
         result = method(*args, **kw)
@@ -26,6 +32,12 @@ def timeit(method):
 
 
 def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> None:
+    """Set the parameteres of the logger
+
+    Args:
+        log_path (str): The path the log file is going to be saved
+        debug (bool): Whether to print debug messages or not
+    """
     log_path = log_path.split(os.sep)
     if len(log_path) > 1:
 
@@ -47,6 +59,11 @@ def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> No
 
 
 def _argparser() -> argparse.Namespace:
+    """Setup the argument parser
+
+    Returns:
+        argparse.Namespace:
+    """
     parser = argparse.ArgumentParser(
         description='A template for python projects.',
         add_help=False)
@@ -74,11 +91,11 @@ def _argparser() -> argparse.Namespace:
 
 @timeit
 def main():
-    """
-    :Example:
-    python starter/main.py -m run_mode_1
-                           -c confs/template_conf.yml
-                           -l logs/output.log
+    """This is the main function of starter.py
+
+    Example: python starter/main.py -m run_mode_1
+
+        -c confs/template_conf.yml -l logs/output.log
     """
 
     # Initializing
