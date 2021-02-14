@@ -9,6 +9,6 @@ jobs: # A basic unit of work in a run
     steps: # steps that comprise the `build` job
       - checkout # check out source code to working directory
       - run: make clean
-      - run: make delete_conda_env
-      - run: make run_tests
+      - run: make create_venv
       - run: make setup
+      - run: make run_tests
