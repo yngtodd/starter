@@ -2,12 +2,15 @@ from typing import List
 import logging
 from termcolor import colored
 
+from .abstract_fancy_log import AbstractFancyLog
 
-class ColorizedLog(object):
-    __slots__ = ('_log', '_color', '_attrs', 'debug', 'info', 'warn', 'warning',
+
+class ColorizedLog(AbstractFancyLog):
+    """ColorizedLog class of the FancyLog package"""
+
+    __slots__ = ('_color', '_attrs', 'debug', 'info', 'warn', 'warning',
                  'error', 'exception', 'critical')
 
-    _log: logging.Logger
     _color: str
     _attrs: List
 
@@ -18,9 +21,10 @@ class ColorizedLog(object):
             color (str):
             attrs (List):
         """
-        self._log = logger
+
         self._color = color if color else 'white'
         self._attrs = attrs if attrs else ['bold']
+        super().__init__(logger=logger)
 
     def __getattr__(self, name: str):
         """
@@ -29,10 +33,10 @@ class ColorizedLog(object):
         """
         if name in ['debug', 'info', 'warn', 'warning',
                     'error', 'exception', 'critical']:
-            return lambda s, *args: getattr(self._log, name)(
+            return lambda s, *args: getattr(self._logger, name)(
                 colored(s, color=self._color, attrs=self._attrs), *args)
 
-        return getattr(self._log, name)
+        return getattr(self._logger, name)
 
 
-log = ColorizedLog(logging.getLogger(__name__))
+# log = ColorizedLog(logging.getLogger(__name__))
