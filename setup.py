@@ -38,7 +38,7 @@ setup_requirements = []
 test_requirements = []
 
 COMMANDS = [
-    'greet = starter.cli:greet',
+    'cli = starter.cli:app',
     'starter_main = starter.main:main'
 ]
 
