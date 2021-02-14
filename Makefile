@@ -1,34 +1,42 @@
 # Makefile for the starter module
 
-# TODO
-# Use flags to determine the use of venv or conda env instead of commenting/uncommenting
-
 SHELL=/bin/bash
 PYTHON_VERSION=3.8
-# You can use either venv (virtualenv) or conda env
-CONDA_BASE=~/anaconda3/envs/starter
-CONDA_BIN=$(CONDA_BASE)/bin
-VENV_BASE=venv
-VENV_BIN=$(VENV_BASE)/bin
-#--------------------------------------------
+
+# You can use either venv (virtualenv) or conda env by specifying the correct argument (server=<prod, circleci, local>)
 ifeq ($(server),prod)
-	AN_ENVIRONMENT_SPECIFIC_VARIABLE='production'
-	SETUP_FLAG=''
+	# Use Conda
+	BASE=~/anaconda3/envs/starter
+	BIN=$(BASE)/bin
+	CLEAN_COMMAND="conda env remove -p $(BASE)"
+	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
+	SETUP_FLAG=
 	DEBUG=False
-else ifeq ($(server),dev)
-	AN_ENVIRONMENT_SPECIFIC_VARIABLE='development'
-	SETUP_FLAG=''
-	DEBUG=True
-else ifeq ($(server),local)
-	AN_ENVIRONMENT_SPECIFIC_VARIABLE='local'
-	SETUP_FLAG='--local'
-	DEBUG=True
-else
-	AN_ENVIRONMENT_SPECIFIC_VARIABLE='production'
+else ifeq ($(server),circleci)
+	# Use Venv
+	BASE=venv
+	BIN=$(BASE)/bin
+	CLEAN_COMMAND="rm -rf $(BASE)"
+	CREATE_COMMAND="python$(PYTHON_VERSION) -m venv $(BASE)"
 	SETUP_FLAG=
 	DEBUG=True
+else ifeq ($(server),local)
+	# Use Conda
+	BASE=~/anaconda3/envs/starter
+	BIN=$(BASE)/bin
+	CLEAN_COMMAND="conda env remove -p $(BASE)"
+	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
+#	SETUP_FLAG='--local' # If you want to use this, you change it in setup.py too
+	DEBUG=True
+else
+	# Use Conda
+	BASE=~/anaconda3/envs/starter
+	BIN=$(BASE)/bin
+	CLEAN_COMMAND="conda env remove -p $(BASE)"
+	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
+#	SETUP_FLAG='--local' # If you want to use this, you change it in setup.py too
+	DEBUG=True
 endif
-#--------------------------------------------
 
 
 all:
@@ -38,57 +46,43 @@ help:
 	@echo "-----------------------------------------------------------------------------------------------------------"
 	@echo "                                              DISPLAYING HELP                                              "
 	@echo "-----------------------------------------------------------------------------------------------------------"
+	@echo "Use make [server=<prod|circleci|local>] <make recipe> to specify the server"
+	@echo "Prod, and local are using conda env, circleci uses virtualenv. Default: local"
+	@echo
 	@echo "make help"
 	@echo "       Display this message"
-	@echo "make install"
+	@echo "make [server=<prod|circleci|local>] install"
 	@echo "       Call clean delete_conda_env create_conda_env setup run_tests"
-	@echo "make clean"
+	@echo "make [server=<prod|circleci|local>] clean"
 	@echo "       Delete all './build ./dist ./*.pyc ./*.tgz ./*.egg-info' files"
-	@echo "make delete_venv"
-	@echo "       Delete the current venv"
-	@echo "make delete_conda_env"
-	@echo "       Delete the current conda env"
-	@echo "make create_venv"
-	@echo "       Create a new venv for the specified python version"
-	@echo "make create_conda_env"
-	@echo "       Create a new conda env for the specified python version"
-	@echo "make setup"
+	@echo "make [server=<prod|circleci|local>] delete_env"
+	@echo "       Delete the current conda env or virtualenv"
+	@echo "make [server=<prod|circleci|local>] create_env"
+	@echo "       Create a new conda env or virtualenv for the specified python version"
+	@echo "make [server=<prod|circleci|local>] setup"
 	@echo "       Call setup.py install"
-	@echo "make run_tests"
+	@echo "make [server=<prod|circleci|local>] run_tests"
 	@echo "       Run all the tests from the specified folder"
 	@echo "-----------------------------------------------------------------------------------------------------------"
 install:
 	$(MAKE) clean
-	# $(MAKE) delete_venv  # Pick virtualenv or conda
-	$(MAKE) delete_conda_env
-	# $(MAKE) create_venv  # Pick virtualenv or conda
-	$(MAKE) create_conda_env
-	# $(MAKE) requirements  # Step is done by setup.py install
+	$(MAKE) delete_env
+	$(MAKE) create_env
 	$(MAKE) setup
 	$(MAKE) run_tests
 	@echo "Installation Successful!"
 clean:
-	# $(MAKE) clean_pyc
-	# $(MAKE) clean_build
 	$(PYTHON_BIN)python setup.py clean
-delete_venv:
-	@echo "Deleting venv.."
-	rm -rf $(VENV_BASE)
-delete_conda_env:
-	@echo "Deleting conda env.."
-	conda env remove -p $(CONDA_BASE)
-create_venv:
-	@echo "Creating venv.."
-	python$(PYTHON_VERSION) -m venv $(VENV_BASE)
-create_conda_env:
-	@echo "Creating conda env.."
-	conda create --prefix $(CONDA_BASE) python=$(PYTHON_VERSION) -y
+delete_env:
+	@echo "Deleting virtual environment.."
+	eval $(DELETE_COMMAND)
+create_env:
+	@echo "Creating virtual environment.."
+	eval $(CREATE_COMMAND)
 run_tests:
-	# $(VENV_BIN)/python setup.py test
-	$(CONDA_BIN)/python setup.py test
+	$(BIN)/python setup.py test $(SETUP_FLAG)
 setup:
-	# $(VENV_BIN)/python setup.py install $(SETUP_FLAG)
-	$(CONDA_BIN)/python setup.py install $(SETUP_FLAG)
+	$(BIN)/python setup.py install $(SETUP_FLAG)
 
 
-.PHONY: help install clean delete_venv delete_conda_env create_venv create_conda_env setup run_tests
+.PHONY: help install clean delete_env create_env setup run_tests
