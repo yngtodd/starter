@@ -58,9 +58,9 @@ def _argparser() -> argparse.Namespace:
 def main():
     """
     :Example:
-    python main.py -m run_mode_1
-                   -c confs/template_conf.yml
-                   -l logs/output.log
+    python starter/main.py -m run_mode_1
+                           -c confs/template_conf.yml
+                           -l logs/output.log
     """
 
     # Initializing

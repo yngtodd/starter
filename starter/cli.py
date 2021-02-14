@@ -1,17 +1,22 @@
 """Command line interface for starter."""
-import argh
+
+import typer
+
+app = typer.Typer()
 
 
-def greet() -> None:
-    r"""Say hello, starter"""
-    print(f'Hello, world!')
+@app.command()
+def hello(name: str):
+    typer.echo(f"Hello {name}")
 
 
-def main():
-    parser = argh.ArghParser()
-    parser.add_commands([greet])
-    parser.dispatch()
+@app.command()
+def bye(name: str, formal: bool = False):
+    if formal:
+        typer.echo(f"Goodbye Mr. {name}. Have a good day.")
+    else:
+        typer.echo(f"Bye {name}!")
 
 
-if __name__=='__main__':
-    main()
+if __name__ == "__main__":
+    app()
