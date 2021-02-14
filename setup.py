@@ -1,4 +1,20 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Command
+import os
+
+
+class CleanCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
+
 
 # Load Requirements
 with open('requirements.txt') as f:
@@ -41,6 +57,9 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
+    cmdclass={
+        'clean': CleanCommand,
+    },
     data_files=[('', data_files)],
     description="A starter template for Python packages.",
     entry_points={'console_scripts': COMMANDS},
