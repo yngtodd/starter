@@ -38,7 +38,6 @@ else
 	DEBUG=True
 endif
 
-
 all:
 	$(MAKE) help
 help:
@@ -46,22 +45,22 @@ help:
 	@echo "-----------------------------------------------------------------------------------------------------------"
 	@echo "                                              DISPLAYING HELP                                              "
 	@echo "-----------------------------------------------------------------------------------------------------------"
-	@echo "Use make [server=<prod|circleci|local>] <make recipe> to specify the server"
+	@echo "Use make <make recipe> [server=<prod|circleci|local>] to specify the server"
 	@echo "Prod, and local are using conda env, circleci uses virtualenv. Default: local"
 	@echo
 	@echo "make help"
 	@echo "       Display this message"
-	@echo "make [server=<prod|circleci|local>] install"
+	@echo "make install [server=<prod|circleci|local>]"
 	@echo "       Call clean delete_conda_env create_conda_env setup run_tests"
-	@echo "make [server=<prod|circleci|local>] clean"
+	@echo "make clean [server=<prod|circleci|local>]"
 	@echo "       Delete all './build ./dist ./*.pyc ./*.tgz ./*.egg-info' files"
-	@echo "make [server=<prod|circleci|local>] delete_env"
+	@echo "make delete_env [server=<prod|circleci|local>]"
 	@echo "       Delete the current conda env or virtualenv"
-	@echo "make [server=<prod|circleci|local>] create_env"
+	@echo "make create_env [server=<prod|circleci|local>]"
 	@echo "       Create a new conda env or virtualenv for the specified python version"
-	@echo "make [server=<prod|circleci|local>] setup"
+	@echo "make setup [server=<prod|circleci|local>]"
 	@echo "       Call setup.py install"
-	@echo "make [server=<prod|circleci|local>] run_tests"
+	@echo "make run_tests [server=<prod|circleci|local>]"
 	@echo "       Run all the tests from the specified folder"
 	@echo "-----------------------------------------------------------------------------------------------------------"
 install:
