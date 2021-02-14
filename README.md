@@ -1,7 +1,7 @@
 # Starter<img src='https://github.com/drkostas/starter/blob/main/img/snek.png' align='right' width='180' height='104'>
 
 [![CircleCI](https://circleci.com/gh/drkostas/template_python_project/tree/master.svg?style=svg)](https://circleci.com/gh/drkostas/starter/tree/master)
-[![GitHub license](https://img.shields.io/badge/license-GNU-blue.svg)](https://raw.githubusercontent.com/drkostas/starter/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/drkostas/starter/master/LICENSE)
 
 ## Table of Contents
 
@@ -45,25 +45,25 @@ You need to have a machine with Python > 3.6 and any Bash based shell (e.g. zsh)
 $ python3.8 -V
 Python 3.8.5
 
-echo $SHELL
+$ echo $SHELL
 /usr/bin/zsh
 
 ```
 
 ## Installing, Testing, Building <a name = "installing"></a>
 
-All the installation steps are being handled by the [Makefile](Makefile). The server=local flag basically specifies that
-you want to use conda instead of venv, and it can be changed easily in the lines #25-28. "Local"  is also the default
-flag should you can omit it.
+All the installation steps are being handled by the [Makefile](Makefile). The `server=local` flag basically specifies
+that you want to use conda instead of venv, and it can be changed easily in the lines `#25-28`. `local`  is also the
+default flag, so you can omit it.
 
-<i>If you don't want to go through the setup steps and finish the installation and run the tests, execute the following
-command:</i>
+<i>If you don't want to go through the detailed setup steps but finish the installation and run the tests quickly,
+execute the following command:</i>
 
 ```ShellSession
 $ make install server=local
 ```
 
-<i>If you executed the previous command, you can skip through to the [Running locally](#run_locally) section.</i>
+<i>If you executed the previous command, you can skip through to the [Running locally section](#run_locally).</i>
 
 ### Check the available make commands <a name = "check_make_commamnds"></a>
 
@@ -127,21 +127,10 @@ $ make run_tests server=local
 
 ## Running the code locally <a name = "run_locally"></a>
 
-In order to run the code, you will only need to change the yml file if you need to, and run either the main, or the
-created console script.
+In order to run the code, you will only need to change the yml file if you need to, and either run its file directly or
+invoke its console script.
 
 <i>If you don't need to change yml file, skip to [Execution Options](#execution_options).
-
-### Set the required environment variables <a name = "env_variables"></a>
-
-In order to run the [main.py](starter/main.py), you will need to set the environmental variables you are using in your 
-configuration yml file. Example:
-
-```ShellSession
-$ export PASS=my_password
-```
-
-The best way to do that, is to create a .env ([example](env_example)) source it before running the code.
 
 ### Modifying the Configuration <a name = "configuration"></a>
 
@@ -163,6 +152,17 @@ example_db:
 The `!ENV` flag indicates that you are passing an environmental value to this attribute. You can change the
 values/environmental var names as you wish. If a yaml variable name is changed/added/deleted, the corresponding changes
 should be reflected on the [yml_schema.json](configuration/yml_schema.json) too which validates it.
+
+### Set the required environment variables <a name = "env_variables"></a>
+
+In order to run the [main.py](starter/main.py)  you will need to set the environmental variables you are using in your
+configuration yml file. Example:
+
+```ShellSession
+$ export PASS=my_password
+```
+
+The best way to do that, is to create a .env file ([example](env_example)), and source it before running the code.
 
 ### Execution Options <a name = "execution_options"></a>
 
@@ -243,18 +243,22 @@ Commands:
 
 ## Deployment <a name = "deployment"></a>
 
-The deployment is being done to <b>Heroku</b>. For more information
-you can check the [setup guide](https://devcenter.heroku.com/articles/getting-started-with-python). 
+The deployment is being done to <b>Heroku</b>. For more information you can check
+the [setup guide](https://devcenter.heroku.com/articles/getting-started-with-python).
 
-Make sure you check the defined [Procfile](Procfile) ([reference](https://devcenter.heroku.com/articles/getting-started-with-python#define-a-procfile)) 
-and that you set the [above-mentioned environmental variables](#env_variables) ([reference](https://devcenter.heroku.com/articles/config-vars)).
+Make sure you check the
+defined [Procfile](Procfile) ([reference](https://devcenter.heroku.com/articles/getting-started-with-python#define-a-procfile))
+and that you set
+the [above-mentioned environmental variables](#env_variables) ([reference](https://devcenter.heroku.com/articles/config-vars))
+.
 
 ## Continuous Integration <a name = "ci"></a>
 
-For the continuous integration, the <b>CircleCI</b> service is being used. 
-For more information you can check the [setup guide](https://circleci.com/docs/2.0/language-python/). 
+For the continuous integration, the <b>CircleCI</b> service is being used. For more information you can check
+the [setup guide](https://circleci.com/docs/2.0/language-python/).
 
-Again, you should set the [above-mentioned environmental variables](#env_variables) ([reference](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-context))
+Again, you should set
+the [above-mentioned environmental variables](#env_variables) ([reference](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-context))
 and for any modifications, edit the [circleci config](/.circleci/config.yml).
 
 ## TODO <a name = "todo"></a>
@@ -265,7 +269,6 @@ Read the [TODO](TODO.md) to see the current task list.
 
 * [Heroku](https://www.heroku.com) - The deployment environment
 * [CircleCI](https://www.circleci.com/) - Continuous Integration service
-
 
 ## License <a name = "license"></a>
 
