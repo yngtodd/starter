@@ -2,6 +2,6 @@ datastore: test
 cloudstore:
   - subproperty1: 10
     subproperty2:
-        - 123
-        - 234
+      - 123
+      - 234
 tag: test_tag

@@ -12,14 +12,13 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    all_config_attributes = ('example_db',)
-    __slots__ = all_config_attributes + ('config', 'config_path', 'example_db', 'tag')
+    __slots__ = ('config', 'config_path', 'config_keys', 'tag')
 
     config: Dict
     config_path: str
     example_db: Dict
     tag: str
-    config_attributes: List = []
+    config_keys: List
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
 
@@ -37,21 +36,18 @@ class Configuration:
         self.config, self.config_path = self.load_yml(config_src=config_src,
                                                       env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
-        logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
+        logger.debug("Schema Validation was Successful.")
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
-        for config_attribute in self.all_config_attributes:
-            if config_attribute in self.config.keys():
-                setattr(self, config_attribute, self.config[config_attribute])
-                self.config_attributes.append(config_attribute)
-            else:
-                setattr(self, config_attribute, None)
+        self.config_keys = [key for key in self.config.keys() if key != 'tag']
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
-        with open('/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])) as f:
+        if config_schema_path[0] != os.sep:
+            config_schema_path = '/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])
+        with open(config_schema_path) as f:
             configuration_schema = json.load(f)
         return configuration_schema
 
@@ -99,13 +95,13 @@ class Configuration:
             raise TypeError('Config file must be TextIOWrapper or path to a file')
         return config, config_path
 
-    def get_example_dbs(self) -> List:
-        if 'example_db' in self.config_attributes:
-            return [sub_config['config'] for sub_config in self.example_db]
+    def get_config(self, config_name) -> List:
+        if config_name in self.config.keys():
+            return self.config[config_name]
         else:
-            raise ConfigurationError('Config property datastore not set!')
+            raise ConfigurationError('Config property %s not set!' % config_name)
 
-    def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:
+    def to_yml(self, fn: Union[str, _io.TextIOWrapper]) -> None:
         """
         Writes the configuration to a stream. For example a file.
 
@@ -114,32 +110,22 @@ class Configuration:
         :return: None
         """
 
-        dict_conf = dict()
-        for config_attribute in self.config_attributes:
-            dict_conf[config_attribute] = getattr(self, config_attribute)
-
-        if include_tag:
-            dict_conf['tag'] = self.tag
-
+        self.config['tag'] = self.tag
         if isinstance(fn, str):
             with open(fn, 'w') as f:
-                yaml.dump(dict_conf, f, default_flow_style=False)
+                yaml.dump(self.config, f, default_flow_style=False)
         elif isinstance(fn, _io.TextIOWrapper):
-            yaml.dump(dict_conf, fn, default_flow_style=False)
+            yaml.dump(self.config, fn, default_flow_style=False)
         else:
             raise TypeError('Expected str or _io.TextIOWrapper not %s' % (type(fn)))
 
     to_yaml = to_yml
 
     def to_json(self) -> Dict:
-        dict_conf = dict()
-        for config_attribute in self.config_attributes:
-            dict_conf[config_attribute] = getattr(self, config_attribute)
-        dict_conf['tag'] = self.tag
-        return dict_conf
+        return self.config
 
-    def __getitem__(self, item):
-        return self.__getattribute__(item)
+    # def __getitem__(self, item):
+    #     return self.get_config(item)
 
 
 class ConfigurationError(Exception):

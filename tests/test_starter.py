@@ -3,22 +3,50 @@
 """Tests for `starter` package."""
 # pylint: disable=redefined-outer-name
 
-import pytest
+import unittest
+import logging
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+logger = logging.getLogger('TestStarter')
 
 
+class TestStarter(unittest.TestCase):
+    test_data_path: str = os.path.join('test_data', 'test_starter')
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
+    def test_sample(self):
+        with open(os.path.join(self.test_data_path, 'my_data.txt'), 'r') as my_data_f:
+            my_data = my_data_f.read()
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+        expected_data = 'sample'
+        self.assertEqual(my_data, expected_data)
+
+    @staticmethod
+    def _setup_log() -> None:
+        # noinspection PyArgumentList
+        logging.basicConfig(level=logging.DEBUG,
+                            format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                            datefmt='%Y-%m-%d %H:%M:%S',
+                            handlers=[logging.StreamHandler()
+                                      ]
+                            )
+
+    def setUp(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    @classmethod
+    def setUpClass(cls):
+        cls._setup_log()
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
-    del response
+if __name__ == '__main__':
+    unittest.main()

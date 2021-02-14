@@ -19,25 +19,25 @@
     "cloudstore": {
       "type": "array",
       "items": {
-        "type": "object"
-      },
-      "additionalProperties": false,
-      "required": [
-        "subproperty1",
-        "subproperty2"
-      ],
-      "properties": {
-        "subproperty1": {
-          "type": "number",
-          "enum": [
-            1,
-            2
-          ]
-        },
-        "subproperty2": {
-          "type": "array"
+        "type": "object",
+        "required": [
+          "subproperty1",
+          "subproperty2"
+        ],
+        "properties": {
+          "subproperty1": {
+            "type": "number",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "subproperty2": {
+            "type": "array"
+          }
         }
-      }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
