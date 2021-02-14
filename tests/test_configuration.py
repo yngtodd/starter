@@ -12,8 +12,6 @@ import sys
 
 from starter.configuration.configuration import Configuration, validate_json_schema
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
 logger = logging.getLogger('TestConfiguration')
 
 
@@ -95,7 +93,8 @@ class TestConfiguration(unittest.TestCase):
         configuration.config['cloudstore'][0]['subproperty1'] = 999
         configuration.tag = 'CHANGED VALUE'
         logger.info('Exporting to yaml..')
-        configuration.to_yaml('test_data/test_configuration/actual_output_to_yaml.yml')
+        configuration.to_yaml(os.path.join(self.test_data_path,
+                                           'actual_output_to_yaml.yml'))
         # Load the modified yml
         logger.info('Loading the exported yaml..')
         modified_configuration = Configuration(

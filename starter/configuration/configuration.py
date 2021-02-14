@@ -109,7 +109,7 @@ class Configuration:
         :param include_tag:
         :return: None
         """
-
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!11\n", os.getcwd())
         self.config['tag'] = self.tag
         if isinstance(fn, str):
             with open(fn, 'w') as f:

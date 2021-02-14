@@ -8,13 +8,10 @@ import logging
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
 logger = logging.getLogger('TestStarter')
 
 
 class TestStarter(unittest.TestCase):
-    test_data_path: str = os.path.join('test_data', 'test_starter')
 
     def test_sample(self):
         with open(os.path.join(self.test_data_path, 'my_data.txt'), 'r') as my_data_f:
@@ -42,6 +39,8 @@ class TestStarter(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls._setup_log()
+        cls.tests_abs_path = os.path.abspath(os.path.dirname(__file__))
+        cls.test_data_path: str = os.path.join(cls.tests_abs_path, 'test_data', 'test_starter')
 
     @classmethod
     def tearDownClass(cls):
