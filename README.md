@@ -18,8 +18,8 @@
     + [Configuration](#configuration)
     + [Environment Variables](#env_variables)
     + [Execution Options](#execution_options)
-        + [Starter Main](starter_main)
-        + [Starter Greet CLI](starter_greet)
+        + [Starter Main](#starter_main)
+        + [Starter Greet CLI](#starter_cli)
 + [Deployment](#deployment)
 + [Continuous Ιntegration](#ci)
 + [Todo](#todo)
@@ -132,6 +132,17 @@ created console script.
 
 <i>If you don't need to change yml file, skip to [Execution Options](#execution_options).
 
+### Set the required environment variables <a name = "env_variables"></a>
+
+In order to run the [main.py](starter/main.py), you will need to set the environmental variables you are using in your 
+configuration yml file. Example:
+
+```ShellSession
+$ export PASS=my_password
+```
+
+The best way to do that, is to create a .env ([example](env_example)) source it before running the code.
+
 ### Modifying the Configuration <a name = "configuration"></a>
 
 There is an already configured yml file under [confs/template_conf.yml](confs/template_conf.yml) with the following
@@ -207,7 +218,7 @@ Optional Arguments:
   -h, --help            Show this help message and exit
 ```
 
-#### Starter CLI <a name = "starter_main"></a>
+#### Starter CLI <a name = "starter_cli"></a>
 
 There is also a [cli.py](starter/cli.py) which you can also invoke it by its console script too
 (`cli`).
