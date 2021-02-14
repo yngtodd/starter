@@ -1,5 +1,8 @@
 # Makefile for the starter module
 
+# TODO
+# Use flags to determine the use of venv or conda env instead of commenting/uncommenting
+
 SHELL=/bin/bash
 PYTHON_VERSION=3.8
 # You can use either venv (virtualenv) or conda env
@@ -7,7 +10,6 @@ CONDA_BASE=~/anaconda3/envs/starter
 CONDA_BIN=$(CONDA_BASE)/bin
 VENV_BASE=venv
 VENV_BIN=$(VENV_BASE)/bin
-# TESTS_FOLDER=tests
 #--------------------------------------------
 ifeq ($(server),prod)
 	AN_ENVIRONMENT_SPECIFIC_VARIABLE='production'
@@ -50,16 +52,10 @@ help:
 	@echo "       Create a new venv for the specified python version"
 	@echo "make create_conda_env"
 	@echo "       Create a new conda env for the specified python version"
-	# @echo "make requirements"
-	# @echo "       Upgrade pip and install the requirements"
 	@echo "make setup"
 	@echo "       Call setup.py install"
 	@echo "make run_tests"
 	@echo "       Run all the tests from the specified folder"
-	# @echo "make clean_pyc"
-	# @echo "       Clean all the pyc files"
-	# @echo "make clean_build"
-	# @echo "       Clean all the build folders"
 	@echo "-----------------------------------------------------------------------------------------------------------"
 install:
 	$(MAKE) clean
@@ -86,28 +82,13 @@ create_venv:
 	python$(PYTHON_VERSION) -m venv $(VENV_BASE)
 create_conda_env:
 	@echo "Creating conda env.."
-	conda create --prefix $(CONDA_BASE) python=$(PYTHON_VERSION)
-#requirements:
-#	@echo "Upgrading pip.."
-#	$(PYTHON_BIN)pip install --upgrade pip wheel setuptools
-#	@echo "Installing requirements.."
-#	$(PYTHON_BIN)pip install -r requirements.txt
+	conda create --prefix $(CONDA_BASE) python=$(PYTHON_VERSION) -y
 run_tests:
-	# source $(PYTHON_BIN)activate && \
-	# export PYTHONPATH=$(PWD) && \
-	# cd tests && python -m unittest
-	$(PYTHON_BIN)python setup.py test
+	# $(VENV_BIN)/python setup.py test
+	$(CONDA_BIN)/python setup.py test
 setup:
-	$(PYTHON_BIN)python setup.py install $(SETUP_FLAG)
-#clean_pyc:
-#	@echo "Cleaning pyc files.."
-#	find . -name '*.pyc' -delete
-#	find . -name '*.pyo' -delete
-#	find . -name '*~' -delete
-#clean_build:
-#	@echo "Cleaning build directories.."
-#	rm --force --recursive build/
-#	rm --force --recursive dist/
-#	rm --force --recursive *.egg-info
+	# $(VENV_BIN)/python setup.py install $(SETUP_FLAG)
+	$(CONDA_BIN)/python setup.py install $(SETUP_FLAG)
+
 
 .PHONY: help install clean delete_venv delete_conda_env create_venv create_conda_env setup run_tests
