@@ -4,9 +4,9 @@ from functools import wraps
 import logging
 from time import time
 
-from playground.fancy_log.colorized_log import ColorizedLog
+from starter.fancy_logger.colorized_logger import ColorizedLogger
 
-time_logger = ColorizedLog(logging.getLogger('Timeit'), 'white')
+time_logger = ColorizedLogger('Timeit', 'white')
 
 
 class timeit(ContextDecorator):

@@ -1,5 +1,4 @@
 import os
-import logging
 from typing import Dict, List, Tuple, Union
 import json
 import _io
@@ -8,9 +7,9 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
-from starter.fancy_log.colorized_log import ColorizedLog
+from starter.fancy_logger.colorized_logger import ColorizedLogger
 
-logger = ColorizedLog(logging.getLogger('Configuration'), 'white')
+logger = ColorizedLogger('Configuration', 'white')
 
 
 class Configuration:
@@ -102,15 +101,15 @@ class Configuration:
         loader.add_constructor(env_tag, constructor_env_variables)
 
         if isinstance(config_src, TextIOWrapper):
-            logging.debug("Loading yaml from TextIOWrapper")
+            logger.debug("Loading yaml from TextIOWrapper")
             config = yaml.load(config_src, Loader=loader)
             config_path = config_src.name
         elif isinstance(config_src, StringIO):
-            logging.debug("Loading yaml from StringIO")
+            logger.debug("Loading yaml from StringIO")
             config = yaml.load(config_src, Loader=loader)
             config_path = "StringIO"
         elif isinstance(config_src, str):
-            logging.debug("Loading yaml from path")
+            logger.debug("Loading yaml from path")
             with open(config_src) as f:
                 config = yaml.load(f, Loader=loader)
             config_path = config_src
