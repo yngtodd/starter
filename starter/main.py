@@ -2,36 +2,15 @@ import traceback
 import logging
 import argparse
 import os
-import time
 
 from starter.fancy_log.colorized_log import ColorizedLog
+from starter.timing_tools.timeit import timeit
 from starter.configuration.configuration import Configuration
 
 logger = ColorizedLog(logging.getLogger('Main'), 'yellow')
 
 
-def timeit(method: object) -> object:
-    """Decorator for counting the execution times of functions
-
-    Args:
-        method (object):
-    """
-
-    def timed(*args, **kw):
-        ts = time.time()
-        result = method(*args, **kw)
-        te = time.time()
-        if 'log_time' in kw:
-            name = kw.get('log_name', method.__name__.upper())
-            kw['log_time'][name] = int((te - ts) * 1000)
-        else:
-            logger.info('%r  %2.2f ms' % (method.__name__, (te - ts) * 1000))
-        return result
-
-    return timed
-
-
-def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> None:
+def setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> None:
     """Set the parameters of the logger
 
     Args:
@@ -58,7 +37,8 @@ def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> No
                         )
 
 
-def _argparser() -> argparse.Namespace:
+@timeit()
+def argparser() -> argparse.Namespace:
     """Setup the argument parser
 
     Returns:
@@ -83,13 +63,14 @@ def _argparser() -> argparse.Namespace:
     optional_args.add_argument('-l', '--log',
                                default='logs/default.log',
                                help="Name of the output log file")
-    optional_args.add_argument('-d', '--debug', action='store_true', help='Enables the debug log messages')
+    optional_args.add_argument('-d', '--debug', action='store_true',
+                               help='Enables the debug log messages')
     optional_args.add_argument("-h", "--help", action="help", help="Show this help message and exit")
 
     return parser.parse_args()
 
 
-@timeit
+@timeit(custom_print="{func_name} took {duration:2.5f} to run!")
 def main():
     """This is the main function of starter.py
 
@@ -99,15 +80,21 @@ def main():
     """
 
     # Initializing
-    args = _argparser()
-    _setup_log(args.log, args.debug)
+    args = argparser()
+    setup_log(args.log, args.debug)
     # Load the configuration
-    # configuration = Configuration(config_src=args.config_file, config_schema_path='yml_schema_strict.json')
+    # configuration = Configuration(config_src=args.config_file,
+    #                               config_schema_path='yml_schema_strict.json')
     configuration = Configuration(config_src=args.config_file)
     # Prints
     logger.info("Started with args: %s" % args)
     logger.info("Loaded Config file: %s", configuration.to_json())
     logger.info("Starting in run mode: {0}".format(args.run_mode))
+    # Example timeit code block
+    custom_print = "Iterating in a 10,000-number-range took {duration:2.5f} seconds."
+    with timeit(custom_print=custom_print):
+        for _ in range(10000):
+            pass
 
 
 if __name__ == '__main__':
