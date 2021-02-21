@@ -44,11 +44,18 @@ class ColorizedLogger(AbstractFancyLogger):
         Args:
             name (str):
         """
+
+        def log_colored(log_text: str, *args, **kwargs):
+            color = self._color if 'color' not in kwargs else kwargs['color']
+            on_color = self._on_color if 'on_color' not in kwargs else kwargs['on_color']
+            attrs = self._attrs if 'attrs' not in kwargs else kwargs['attrs']
+            colored_text = colored(log_text, color=color, on_color=on_color, attrs=attrs)
+            return getattr(self._logger, name)(colored_text, *args)
+
         if name in ['debug', 'info', 'warn', 'warning',
                     'error', 'exception', 'critical']:
             self.add_file_handler_if_needed(self._logger)
-            return lambda s, *args: getattr(self._logger, name)(
-                colored(s, color=self._color, on_color=self._on_color, attrs=self._attrs), *args)
+            return log_colored
         elif name in ['newline', 'nl']:
             self.add_file_handler_if_needed(self._logger)
             return getattr(self._logger, name)
@@ -123,7 +130,7 @@ class ColorizedLogger(AbstractFancyLogger):
             os.makedirs(log_dir)
 
     @classmethod
-    def setup_logger(cls, log_path: str = '../logs/default.log', debug: bool = False) -> None:
+    def setup_logger(cls, log_path: str, debug: bool) -> None:
         """ Sets-up the basic_logger
 
         Args:

@@ -6,8 +6,8 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Convert timeit wrapper to dual decorator and contextmanager
 - [X] Log new lines
 - [X] Add bold, italic and strikethrough in fancy log
+- [X] Print where the log is going to be saved
 - [ ] Option for customizing only a specific logging line
-- [ ] Print where the log is going to be saved
 - [ ] Rename Configuration Log name to Config
 - [ ] Rename config to properties (in yml)
 - [ ] Configuration file log to print the name of the yml loaded

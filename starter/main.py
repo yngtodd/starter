@@ -60,9 +60,15 @@ def main():
     configuration = Configuration(config_src=args.config_file)
     # Prints
     basic_logger.info("Loaded Config file: %s", configuration.to_json())
+    basic_logger.info("Starting in run mode: {0}".format(args.run_mode))
+    basic_logger.info("Examples:")
+    fancy_logger.info("You can customize the logger like this")
+    fancy_logger.info("You can customize each log message differently",
+                      color="green", on_color="on_white", attrs=[])
+    basic_logger.info("If you want to print complete blank lines use nl(num_lines=<#>):")
     basic_logger.nl(num_lines=2)
-    fancy_logger.info("Starting in run mode: {0}".format(args.run_mode))
     # Example timeit code block
+    basic_logger.info("Lastly, you can use timeit either as a function Wrapper or a ContextManager:")
     custom_print = "Iterating in a 10,000-number-range took {duration:2.5f} seconds."
     with timeit(custom_print=custom_print):
         for _ in range(10000):
