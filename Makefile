@@ -47,7 +47,8 @@ requirements:
 	@echo "Installing requirements.."
 	$(PYTHON_BIN)pip install -r requirements.txt
 cookiecutter:
-	@echo "Running cookiecutter.."
+	@echo -e "\n\nRunning cookiecutter.."
+	@echo -e "\n--------------- Enter the following variables (Click enter to keep defaults) ---------------"
 	$(PYTHON_BIN)cookiecutter . -f
 clean:
 	@echo "Clean command not yet supported"
