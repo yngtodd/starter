@@ -9,7 +9,7 @@ from jsonschema import validate as validate_json_schema
 
 from starter.fancy_logger.colorized_logger import ColorizedLogger
 
-logger = ColorizedLogger('Configuration', 'white')
+logger = ColorizedLogger('Config', 'white')
 
 
 class Configuration:
@@ -22,7 +22,8 @@ class Configuration:
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
 
-    def __init__(self, config_src: Union[TextIOWrapper, StringIO, str], config_schema_path: str = 'yml_schema.json'):
+    def __init__(self, config_src: Union[TextIOWrapper, StringIO, str],
+                 config_schema_path: str = 'yml_schema.json'):
         """
        The basic constructor. Creates a new instance of the Configuration class.
 
@@ -43,7 +44,8 @@ class Configuration:
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         self.config_keys = [key for key in self.config.keys() if key != 'tag']
-        logger.info("Configuration file loaded successfully with tag: %s" % self.tag)
+        logger.info(f"Configuration file loaded successfully from path: {self.config_path}")
+        logger.info(f"Configuration Tag: {self.tag}")
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
@@ -58,13 +60,15 @@ class Configuration:
         """
 
         if config_schema_path[0] != os.sep:
-            config_schema_path = '/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])
+            config_schema_path = '/'.join(
+                [os.path.dirname(os.path.realpath(__file__)), config_schema_path])
         with open(config_schema_path) as f:
             configuration_schema = json.load(f)
         return configuration_schema
 
     @staticmethod
-    def load_yml(config_src: Union[TextIOWrapper, StringIO, str], env_tag: str, env_pattern: str) -> Tuple[Dict, str]:
+    def load_yml(config_src: Union[TextIOWrapper, StringIO, str], env_tag: str, env_pattern: str) -> \
+    Tuple[Dict, str]:
         """
         Loads the configuration file
         Args:
@@ -103,16 +107,16 @@ class Configuration:
         if isinstance(config_src, TextIOWrapper):
             logger.debug("Loading yaml from TextIOWrapper")
             config = yaml.load(config_src, Loader=loader)
-            config_path = config_src.name
+            config_path = os.path.abspath(config_src.name)
         elif isinstance(config_src, StringIO):
             logger.debug("Loading yaml from StringIO")
             config = yaml.load(config_src, Loader=loader)
             config_path = "StringIO"
         elif isinstance(config_src, str):
+            config_path = os.path.abspath(config_src)
             logger.debug("Loading yaml from path")
-            with open(config_src) as f:
+            with open(config_path) as f:
                 config = yaml.load(f, Loader=loader)
-            config_path = config_src
         else:
             raise TypeError('Config file must be TextIOWrapper or path to a file')
         return config, config_path

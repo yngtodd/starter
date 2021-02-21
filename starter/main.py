@@ -59,7 +59,6 @@ def main():
     #                               config_schema_path='yml_schema_strict.json')
     configuration = Configuration(config_src=args.config_file)
     # Prints
-    basic_logger.info("Loaded Config file: %s", configuration.to_json())
     basic_logger.info("Starting in run mode: {0}".format(args.run_mode))
     basic_logger.info("Examples:")
     fancy_logger.info("You can customize the logger like this")

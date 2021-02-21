@@ -20,7 +20,7 @@
         "type": "object",
         "required": [
           "type",
-          "config"
+          "properties"
         ],
         "properties": {
           "type": {
@@ -30,7 +30,7 @@
               "mongodb"
             ]
           },
-          "config": {
+          "properties": {
             "type": "object",
             "additionalProperties": false,
             "required": [

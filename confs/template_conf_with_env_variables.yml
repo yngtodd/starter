@@ -1,6 +1,6 @@
 tag: template
 example_db:
-  - config:
+  - properties:
       hostname: example.host.name
       username: my_name
       password: !ENV ${PASS}

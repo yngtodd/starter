@@ -7,10 +7,10 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Log new lines
 - [X] Add bold, italic and strikethrough in fancy log
 - [X] Print where the log is going to be saved
-- [ ] Option for customizing only a specific logging line
-- [ ] Rename Configuration Log name to Config
-- [ ] Rename config to properties (in yml)
-- [ ] Configuration file log to print the name of the yml loaded
+- [X] Option for customizing only a specific logging line
+- [X] Rename Configuration Log name to Config
+- [X] Rename config to properties (in yml)
+- [X] Configuration file log to print the name of the yml loaded
 - [ ] Change Makefile - write the create and remove commands only once
 - setuplog and get_args shouldn't be protected members
 - [ ] Modify the __init__s and optimize imports
