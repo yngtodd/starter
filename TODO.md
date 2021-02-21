@@ -13,4 +13,4 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Configuration file log to print the name of the yml loaded
 - [X] setuplog and get_args shouldn't be protected members
 - [X] Modify the __init__s and optimize imports
-- [ ] Add a template guide and/or make script that auto changes the template (cookiecutter?)
+- [X] Add a template guide and/or make script that auto changes the template (cookiecutter?)
