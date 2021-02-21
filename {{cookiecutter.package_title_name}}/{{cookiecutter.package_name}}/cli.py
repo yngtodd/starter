@@ -1,4 +1,4 @@
-"""Command line interface for starter."""
+"""Command line interface for {{cookiecutter.package_name}}."""
 
 import typer
 

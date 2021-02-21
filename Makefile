@@ -2,41 +2,10 @@
 
 SHELL=/bin/bash
 PYTHON_VERSION=3.8
-
-# You can use either venv (virtualenv) or conda env by specifying the correct argument (server=<prod, circleci, local>)
-ifeq ($(server),prod)
-	# Use Conda
-	BASE=~/anaconda3/envs/starter
-	BIN=$(BASE)/bin
-	CLEAN_COMMAND="conda env remove -p $(BASE)"
-	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
-	SETUP_FLAG=
-	DEBUG=False
-else ifeq ($(server),circleci)
-	# Use Venv
-	BASE=venv
-	BIN=$(BASE)/bin
-	CLEAN_COMMAND="rm -rf $(BASE)"
-	CREATE_COMMAND="python$(PYTHON_VERSION) -m venv $(BASE)"
-	SETUP_FLAG=
-	DEBUG=True
-else ifeq ($(server),local)
-	# Use Conda
-	BASE=~/anaconda3/envs/starter
-	BIN=$(BASE)/bin
-	CLEAN_COMMAND="conda env remove -p $(BASE)"
-	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
-#	SETUP_FLAG='--local' # If you want to use this, you change it in setup.py too
-	DEBUG=True
-else
-	# Use Conda
-	BASE=~/anaconda3/envs/starter
-	BIN=$(BASE)/bin
-	CLEAN_COMMAND="conda env remove -p $(BASE)"
-	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
-#	SETUP_FLAG='--local' # If you want to use this, you change it in setup.py too
-	DEBUG=True
-endif
+BASE=~/anaconda3/envs/starter_cookiecutter
+BIN=$(BASE)/bin
+CLEAN_COMMAND="conda env remove -p $(BASE)"
+CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
 
 all:
 	$(MAKE) help
@@ -45,43 +14,48 @@ help:
 	@echo "-----------------------------------------------------------------------------------------------------------"
 	@echo "                                              DISPLAYING HELP                                              "
 	@echo "-----------------------------------------------------------------------------------------------------------"
-	@echo "Use make <make recipe> [server=<prod|circleci|local>] to specify the server"
-	@echo "Prod, and local are using conda env, circleci uses virtualenv. Default: local"
 	@echo
 	@echo "make help"
 	@echo "       Display this message"
-	@echo "make install [server=<prod|circleci|local>]"
-	@echo "       Call clean delete_conda_env create_conda_env setup run_tests"
-	@echo "make clean [server=<prod|circleci|local>]"
-	@echo "       Delete all './build ./dist ./*.pyc ./*.tgz ./*.egg-info' files"
-	@echo "make delete_env [server=<prod|circleci|local>]"
+	@echo "make install"
+	@echo "       Call delete_conda_env, create_conda_env, cookiecutter, requirements, and clean"
+	@echo "make delete_env"
 	@echo "       Delete the current conda env or virtualenv"
-	@echo "make create_env [server=<prod|circleci|local>]"
+	@echo "make create_env"
 	@echo "       Create a new conda env or virtualenv for the specified python version"
-	@echo "make setup [server=<prod|circleci|local>]"
-	@echo "       Call setup.py install"
-	@echo "make run_tests [server=<prod|circleci|local>]"
-	@echo "       Run all the tests from the specified folder"
+	@echo "make requirements"
+	@echo "       Install python requirements for cookiecutter"
+	@echo "make cookiecutter"
+	@echo "       Run cookiecutter and generate a project from the template"
+	@echo "make clean"
+	@echo "       Not Yet Supported"
 	@echo "-----------------------------------------------------------------------------------------------------------"
 install:
-	$(MAKE) clean
 	$(MAKE) delete_env
 	$(MAKE) create_env
-	$(MAKE) setup
-	$(MAKE) run_tests
+	$(MAKE) requirements
+	$(MAKE) cookiecutter
+	$(MAKE) clean
 	@echo "Installation Successful!"
-clean:
-	$(PYTHON_BIN)python setup.py clean
 delete_env:
 	@echo "Deleting virtual environment.."
 	eval $(DELETE_COMMAND)
 create_env:
 	@echo "Creating virtual environment.."
 	eval $(CREATE_COMMAND)
-run_tests:
-	$(BIN)/python setup.py test $(SETUP_FLAG)
-setup:
-	$(BIN)/python setup.py install $(SETUP_FLAG)
+requirements:
+	@echo "Installing requirements.."
+	$(PYTHON_BIN)pip install -r requirements.txt
+cookiecutter:
+	@echo -e "\n\nRunning cookiecutter.."
+	@echo -e "\n--------------- Enter the following variables (Click enter to keep defaults) ---------------"
+	$(PYTHON_BIN)cookiecutter . -f
+clean:
+	@echo "Cleaning the template files.."
+	$(MAKE) delete_env
+	@rm -rf .gitignore cookiecutter.json LICENSE Makefile README.md requirements.txt TODO.md "{{cookiecutter.package_title_name}}"
+	@generated_project=$$( find . -name * ) && \
+		cp -a $${generated_project}/* . && \
+		rm -rf $${generated_project}
 
-
-.PHONY: help install clean delete_env create_env setup run_tests
+.PHONY: help install delete_env create_env requirements cookiecutter clean

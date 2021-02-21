@@ -9,7 +9,7 @@ from typing import Dict
 import logging
 import os
 
-from starter import Configuration, validate_json_schema
+from {{cookiecutter.package_name}} import Configuration, validate_json_schema
 
 logger = logging.getLogger('TestConfiguration')
 

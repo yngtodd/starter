@@ -14,4 +14,3 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] setuplog and get_args shouldn't be protected members
 - [X] Modify the __init__s and optimize imports
 - [ ] Add a template guide and/or make script that auto changes the template (cookiecutter?)
-- [ ] Stop Global Warming

@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 
-"""Tests for `starter` package."""
+"""Tests for `{{cookiecutter.package_name}}` package."""
 # pylint: disable=redefined-outer-name
 
 import unittest
 import logging
 import os
 
-logger = logging.getLogger('TestStarter')
+logger = logging.getLogger('Test{{cookiecutter.package_title_name}}')
 
 
-class TestStarter(unittest.TestCase):
+class Test{{cookiecutter.package_title_name}}(unittest.TestCase):
 
     def test_sample(self):
         with open(os.path.join(self.test_data_path, 'my_data.txt'), 'r') as my_data_f:
@@ -39,7 +39,8 @@ class TestStarter(unittest.TestCase):
     def setUpClass(cls):
         cls._setup_log()
         cls.tests_abs_path = os.path.abspath(os.path.dirname(__file__))
-        cls.test_data_path: str = os.path.join(cls.tests_abs_path, 'test_data', 'test_starter')
+        cls.test_data_path: str = os.path.join(cls.tests_abs_path, 'test_data',
+                                               'test_{{cookiecutter.package_name}}')
 
     @classmethod
     def tearDownClass(cls):

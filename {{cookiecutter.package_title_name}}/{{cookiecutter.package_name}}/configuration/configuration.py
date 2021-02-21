@@ -7,7 +7,7 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
-from starter.fancy_logger.colorized_logger import ColorizedLogger
+from {{cookiecutter.package_name}} import ColorizedLogger
 
 logger = ColorizedLogger('Config', 'white')
 
@@ -97,7 +97,7 @@ class Configuration:
                 full_value = value
                 for g in match:
                     full_value = full_value.replace(
-                        f'${{{g}}}', os.environ.get(g, g)
+                        {% raw %}f'${{{g}}}', os.environ.get(g, g){% endraw %}
                     )
                 return full_value
             return value

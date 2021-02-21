@@ -38,15 +38,15 @@ setup_requirements = []
 test_requirements = []
 
 COMMANDS = [
-    'cli = starter.cli:app',
-    'starter_main = starter.main:main'
+    'cli = {{cookiecutter.package_name}}.cli:app',
+    '{{cookiecutter.package_name}}_main = {{cookiecutter.package_name}}.main:main'
 ]
 
-data_files = ['starter/configuration/yml_schema.json']
+data_files = ['{{cookiecutter.package_name}}/configuration/yml_schema.json']
 
 setup(
-    author="drkostas",
-    author_email="georgiou.kostas94@gmail.com",
+    author="{{cookiecutter.author}}",
+    author_email="{{cookiecutter.author_email}}",
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -61,21 +61,22 @@ setup(
         'clean': CleanCommand,
     },
     data_files=[('', data_files)],
-    description="A starter template for Python packages.",
+    description="{{cookiecutter.package_description}}",
     entry_points={'console_scripts': COMMANDS},
     install_requires=requirements,
     license="MIT license",
     long_description=readme,
     include_package_data=True,
-    keywords='starter',
-    name='starter',
+    keywords='{{cookiecutter.package_name}}',
+    name='{{cookiecutter.package_name}}',
     # package_dir={'': '.'},
-    packages=find_packages(include=['starter', 'starter.*']),
+    packages=find_packages(include=['{{cookiecutter.package_name}}',
+                                    '{{cookiecutter.package_name}}.*']),
     # py_modules=['main'],
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/drkostas/starter',
-    version='0.2.1',
+    url='{{cookiecutter.github_url}}',
+    version='{{cookiecutter.package_version}}',
     zip_safe=False,
 )
