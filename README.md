@@ -21,6 +21,19 @@ A cookiecutter template for Python packages.
 
 These instructions will help you generate a new python project/package from the cookiecutter template.
 
+There are 2 ways to use this template:
+
+1. Just open a command line and run:
+
+```ShellSession
+cookiecutter git@github.com:drkostas/starter.git --checkout cookiecutter
+```
+
+<i>You have to have cookiecutter installed first of course. If you don't,
+run: `pip install cookiecutter~=1.7.2` first
+
+2. Clone this repository and follow the next steps
+
 ### Prerequisites <a name = "prerequisites"></a>
 
 You need to have a machine with Python > 3.6 and any Bash based shell (e.g. zsh) installed.

@@ -51,8 +51,11 @@ cookiecutter:
 	@echo -e "\n--------------- Enter the following variables (Click enter to keep defaults) ---------------"
 	$(PYTHON_BIN)cookiecutter . -f
 clean:
-	@echo "Clean command not yet supported"
-	#$(PYTHON_BIN)python setup.py clean
-
+	@echo "Cleaning the template files.."
+	$(MAKE) delete_env
+	@rm -rf .gitignore cookiecutter.json LICENCE Makefile README.md requirements.txt TODO.md
+	@project_name=`find . -name *` && \
+		mv ${project_name}/* . && \
+		rmdir ${project_name}
 
 .PHONY: help install delete_env create_env requirements cookiecutter clean
