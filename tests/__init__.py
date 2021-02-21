@@ -1,1 +1,1 @@
-"""Unit test package for starter."""
+"""Unit test package for {{cookiecutter.package_title_name}}."""

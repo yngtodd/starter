@@ -1,0 +1,10 @@
+{
+  "package_title_name": "Starter",
+  "package_name": "starter",
+  "author": "drkostas",
+  "author_full_name": "Konstantinos Georgiou",
+  "author_email": "georgiou.kostas94@gmail.com",
+  "package_description": "A starter template for Python packages.",
+  "github_url": "https://github.com/drkostas/starter",
+  "package_version": "0.2.0"
+}

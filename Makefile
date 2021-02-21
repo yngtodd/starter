@@ -1,4 +1,4 @@
-# Makefile for the starter module
+# Makefile for the {{cookiecutter.package_name}} module
 
 SHELL=/bin/bash
 PYTHON_VERSION=3.8
@@ -6,7 +6,7 @@ PYTHON_VERSION=3.8
 # You can use either venv (virtualenv) or conda env by specifying the correct argument (server=<prod, circleci, local>)
 ifeq ($(server),prod)
 	# Use Conda
-	BASE=~/anaconda3/envs/starter
+	BASE=~/anaconda3/envs/{{cookiecutter.package_name}}
 	BIN=$(BASE)/bin
 	CLEAN_COMMAND="conda env remove -p $(BASE)"
 	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
@@ -22,7 +22,7 @@ else ifeq ($(server),circleci)
 	DEBUG=True
 else ifeq ($(server),local)
 	# Use Conda
-	BASE=~/anaconda3/envs/starter
+	BASE=~/anaconda3/envs/{{cookiecutter.package_name}}
 	BIN=$(BASE)/bin
 	CLEAN_COMMAND="conda env remove -p $(BASE)"
 	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"
@@ -30,7 +30,7 @@ else ifeq ($(server),local)
 	DEBUG=True
 else
 	# Use Conda
-	BASE=~/anaconda3/envs/starter
+	BASE=~/anaconda3/envs/{{cookiecutter.package_name}}
 	BIN=$(BASE)/bin
 	CLEAN_COMMAND="conda env remove -p $(BASE)"
 	CREATE_COMMAND="conda create --prefix $(BASE) python=$(PYTHON_VERSION) -y"

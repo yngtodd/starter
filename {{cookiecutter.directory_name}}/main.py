@@ -1,7 +1,7 @@
 import traceback
 import argparse
 
-from starter import Configuration, ColorizedLogger, timeit
+from {{cookiecutter.package_name}} import Configuration, ColorizedLogger, timeit
 
 basic_logger = ColorizedLogger(logger_name='Main', color='yellow')
 fancy_logger = ColorizedLogger(logger_name='FancyMain',
@@ -43,10 +43,12 @@ def get_args() -> argparse.Namespace:
 
 @timeit(custom_print="{func_name} took {duration:2.5f} to run!")
 def main():
-    """This is the main function of starter.py
+    """This is the main function of main.py
 
     Example:
-        python starter/main.py -m run_mode_1 -c confs/template_conf.yml -l logs/output.log
+        python {{cookiecutter.package_name}}/main.py -m run_mode_1
+                                                     -c confs/template_conf.yml
+                                                     -l logs/output.log
     """
 
     # Initializing

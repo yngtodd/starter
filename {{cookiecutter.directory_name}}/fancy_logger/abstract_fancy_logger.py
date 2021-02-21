@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-import logging
-
 
 class AbstractFancyLogger(ABC):
     """Abstract class of the FancyLog package"""

@@ -7,7 +7,7 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
-from starter.fancy_logger.colorized_logger import ColorizedLogger
+from {{cookiecutter.package_name}} import ColorizedLogger
 
 logger = ColorizedLogger('Config', 'white')
 

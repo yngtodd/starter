@@ -1,7 +1,7 @@
-# Starter<img src='https://github.com/drkostas/starter/blob/master/img/snek.png' align='right' width='180' height='104'>
+# {{cookiecutter.package_title_name}}<img src='{{cookiecutter.github_url}}/blob/master/img/snek.png' align='right' width='180' height='104'>
 
-[![CircleCI](https://circleci.com/gh/drkostas/template_python_project/tree/master.svg?style=svg)](https://circleci.com/gh/drkostas/starter/tree/master)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/drkostas/starter/master/LICENSE)
+[![CircleCI](https://circleci.com/gh/{{cookiecutter.author}}/{{cookiecutter.package_name}}/tree/master.svg?style=svg)](https://circleci.com/gh/{{cookiecutter.author}}/{{cookiecutter.package_name}}/tree/master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/{{cookiecutter.author}}/{{cookiecutter.package_name}}/master/LICENSE)
 
 ## Table of Contents
 
@@ -18,8 +18,8 @@
     + [Configuration](#configuration)
     + [Environment Variables](#env_variables)
     + [Execution Options](#execution_options)
-        + [Starter Main](#starter_main)
-        + [Starter Greet CLI](#starter_cli)
+        + [{{cookiecutter.package_title_name}} Main](#{{cookiecutter.package_name}}_main)
+        + [{{cookiecutter.package_title_name}} Greet CLI](#{{cookiecutter.package_name}}_cli)
 + [Deployment](#deployment)
 + [Continuous Ιntegration](#ci)
 + [Todo](#todo)
@@ -29,12 +29,13 @@
 
 ## About <a name = "about"></a>
 
-A starter template for Python packages.
+{{cookiecutter.package_description}}
 
 ## Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing
-purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for
+development and testing purposes. See deployment for notes on how to deploy the project on a live
+system.
 
 ### Prerequisites <a name = "prerequisites"></a>
 
@@ -52,18 +53,19 @@ $ echo $SHELL
 
 ## Installing, Testing, Building <a name = "installing"></a>
 
-All the installation steps are being handled by the [Makefile](Makefile). The `server=local` flag basically specifies
-that you want to use conda instead of venv, and it can be changed easily in the lines `#25-28`. `local`  is also the
-default flag, so you can omit it.
+All the installation steps are being handled by the [Makefile](Makefile). The `server=local` flag
+basically specifies that you want to use conda instead of venv, and it can be changed easily in the
+lines `#25-28`. `local`  is also the default flag, so you can omit it.
 
-<i>If you don't want to go through the detailed setup steps but finish the installation and run the tests quickly,
-execute the following command:</i>
+<i>If you don't want to go through the detailed setup steps but finish the installation and run the
+tests quickly, execute the following command:</i>
 
 ```ShellSession
 $ make install server=local
 ```
 
-<i>If you executed the previous command, you can skip through to the [Running locally section](#run_locally).</i>
+<i>If you executed the previous command, you can skip through to
+the [Running locally section](#run_locally).</i>
 
 ### Check the available make commands <a name = "check_make_commamnds"></a>
 
@@ -110,8 +112,8 @@ $ make create_env server=local
 
 ### Build Locally (and install requirements) <a name = "build_locally"></a>
 
-To build the project locally using the setup.py install command (which also installs the requirements), execute the
-following command:
+To build the project locally using the setup.py install command (which also installs the requirements),
+execute the following command:
 
 ```ShellSession
 $ make setup server=local
@@ -127,15 +129,15 @@ $ make run_tests server=local
 
 ## Running the code locally <a name = "run_locally"></a>
 
-In order to run the code, you will only need to change the yml file if you need to, and either run its file directly or
-invoke its console script.
+In order to run the code, you will only need to change the yml file if you need to, and either run its
+file directly or invoke its console script.
 
 <i>If you don't need to change yml file, skip to [Execution Options](#execution_options).
 
 ### Modifying the Configuration <a name = "configuration"></a>
 
-There is an already configured yml file under [confs/template_conf.yml](confs/template_conf.yml) with the following
-structure:
+There is an already configured yml file under [confs/template_conf.yml](confs/template_conf.yml) with
+the following structure:
 
 ```yaml
 tag: template
@@ -149,43 +151,46 @@ example_db:
     type: mysql
 ```
 
-The `!ENV` flag indicates that you are passing an environmental value to this attribute. You can change the
-values/environmental var names as you wish. If a yaml variable name is changed/added/deleted, the corresponding changes
-should be reflected on the [yml_schema.json](configuration/yml_schema.json) too which validates it.
+The `!ENV` flag indicates that you are passing an environmental value to this attribute. You can change
+the values/environmental var names as you wish. If a yaml variable name is changed/added/deleted, the
+corresponding changes should be reflected on the [yml_schema.json](configuration/yml_schema.json) too
+which validates it.
 
 ### Set the required environment variables <a name = "env_variables"></a>
 
-In order to run the [main.py](starter/main.py)  you will need to set the environmental variables you are using in your
-configuration yml file. Example:
+In order to run the [main.py]({{cookiecutter.package_name}}/main.py)  you will need to set the
+environmental variables you are using in your configuration yml file. Example:
 
 ```ShellSession
 $ export PASS=my_password
 ```
 
-The best way to do that, is to create a .env file ([example](env_example)), and source it before running the code.
+The best way to do that, is to create a .env file ([example](env_example)), and source it before
+running the code.
 
 ### Execution Options <a name = "execution_options"></a>
 
 First, make sure you are in the correct virtual environment:
 
 ```ShellSession
-$ conda activate starter
+$ conda activate {{cookiecutter.package_name}}
 
 $ which python
-/home/drkostas/anaconda3/envs/starter/bin/python
+/home/{{cookiecutter.author}}/anaconda3/envs/{{cookiecutter.package_name}}/bin/python
 
 ```
 
-#### Starter Main <a name = "starter_main"></a>
+#### {{cookiecutter.package_title_name}} Main <a name = "{{cookiecutter.package_name}}"></a>
 
-Now, in order to run the code you can either call the [main.py](starter/main.py) directly, or invoke the `starter_main`
+Now, in order to run the code you can either call the [main.py]({{cookiecutter.package_name}}/main.py)
+directly, or invoke the `{{cookiecutter.package_name}}_main`
 console script.
 
 ```ShellSession
-$ python starter/main.py --help
+$ python {{cookiecutter.package_name}}/main.py --help
 usage: main.py -c CONFIG_FILE [-m {run_mode_1,run_mode_2,run_mode_3}] [-l LOG] [-d] [-h]
 
-A template for python projects.
+{{cookiecutter.package_description}}
 
 Required Arguments:
   -c CONFIG_FILE, --config-file CONFIG_FILE
@@ -201,10 +206,10 @@ Optional Arguments:
 
 # Or
 
-$ starter_main --help
+$ {{cookiecutter.package_name}}_main --help
 usage: main.py -c CONFIG_FILE [-m {run_mode_1,run_mode_2,run_mode_3}] [-l LOG] [-d] [-h]
 
-A template for python projects.
+{{cookiecutter.package_description}}
 
 Required Arguments:
   -c CONFIG_FILE, --config-file CONFIG_FILE
@@ -218,9 +223,10 @@ Optional Arguments:
   -h, --help            Show this help message and exit
 ```
 
-#### Starter CLI <a name = "starter_cli"></a>
+#### {{cookiecutter.package_title_name}} CLI <a name = "{{cookiecutter.package_name}}_cli"></a>
 
-There is also a [cli.py](starter/cli.py) which you can also invoke it by its console script too
+There is also a [cli.py]({{cookiecutter.package_name}}/cli.py) which you can also invoke it by its
+console script too
 (`cli`).
 
 ```ShellSession
@@ -254,8 +260,8 @@ the [above-mentioned environmental variables](#env_variables) ([reference](https
 
 ## Continuous Integration <a name = "ci"></a>
 
-For the continuous integration, the <b>CircleCI</b> service is being used. For more information you can check
-the [setup guide](https://circleci.com/docs/2.0/language-python/).
+For the continuous integration, the <b>CircleCI</b> service is being used. For more information you can
+check the [setup guide](https://circleci.com/docs/2.0/language-python/).
 
 Again, you should set
 the [above-mentioned environmental variables](#env_variables) ([reference](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-context))
@@ -276,5 +282,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments <a name = "acknowledgments"></a>
 
-* Thanks το PurpleBooth for the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* Thanks το PurpleBooth for
+  the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 
