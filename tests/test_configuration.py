@@ -8,9 +8,8 @@ from jsonschema.exceptions import ValidationError
 from typing import Dict
 import logging
 import os
-import sys
 
-from starter.configuration.configuration import Configuration, validate_json_schema
+from starter import Configuration, validate_json_schema
 
 logger = logging.getLogger('TestConfiguration')
 

@@ -1,9 +1,7 @@
 import traceback
 import argparse
 
-from starter.fancy_logger.colorized_logger import ColorizedLogger
-from starter.timing_tools.timeit import timeit
-from starter.configuration.configuration import Configuration
+from starter import Configuration, ColorizedLogger, timeit
 
 basic_logger = ColorizedLogger(logger_name='Main', color='yellow')
 fancy_logger = ColorizedLogger(logger_name='FancyMain',
