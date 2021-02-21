@@ -10,7 +10,7 @@ from jsonschema import validate as validate_json_schema
 
 from starter.fancy_log.colorized_log import ColorizedLog
 
-logger = ColorizedLog(logging.getLogger('Configuration'), 'green')
+logger = ColorizedLog(logging.getLogger('Configuration'), 'white')
 
 
 class Configuration:
@@ -18,7 +18,6 @@ class Configuration:
 
     config: Dict
     config_path: str
-    example_db: Dict
     tag: str
     config_keys: List
     env_variable_tag: str = '!ENV'
@@ -45,7 +44,7 @@ class Configuration:
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         self.config_keys = [key for key in self.config.keys() if key != 'tag']
-        logger.info("Configuration file loaded successfully")
+        logger.info("Configuration file loaded successfully with tag: %s" % self.tag)
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:

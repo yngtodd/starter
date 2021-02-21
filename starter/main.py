@@ -32,7 +32,7 @@ def timeit(method: object) -> object:
 
 
 def _setup_log(log_path: str = '../logs/default.log', debug: bool = False) -> None:
-    """Set the parameteres of the logger
+    """Set the parameters of the logger
 
     Args:
         log_path (str): The path the log file is going to be saved

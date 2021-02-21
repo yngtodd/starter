@@ -1,4 +1,4 @@
-# Starter<img src='https://github.com/drkostas/starter/blob/main/img/snek.png' align='right' width='180' height='104'>
+# Starter<img src='https://github.com/drkostas/starter/blob/master/img/snek.png' align='right' width='180' height='104'>
 
 [![CircleCI](https://circleci.com/gh/drkostas/template_python_project/tree/master.svg?style=svg)](https://circleci.com/gh/drkostas/starter/tree/master)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/drkostas/starter/master/LICENSE)
