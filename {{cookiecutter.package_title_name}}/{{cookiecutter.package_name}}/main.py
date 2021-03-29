@@ -27,13 +27,12 @@ def get_args() -> argparse.Namespace:
         'help': "The configuration yml file"
     }
     required_args.add_argument('-c', '--config-file', **config_file_params)
+    required_args.add_argument('-l', '--log', required=True, help="Name of the output log file")
     # Optional args
     optional_args = parser.add_argument_group('Optional Arguments')
     optional_args.add_argument('-m', '--run-mode', choices=['run_mode_1', 'run_mode_2', 'run_mode_3'],
                                default='run_mode_1',
                                help='Description of the run modes')
-    optional_args.add_argument('-l', '--log',
-                               help="Name of the output log file")
     optional_args.add_argument('-d', '--debug', action='store_true',
                                help='Enables the debug log messages')
     optional_args.add_argument("-h", "--help", action="help", help="Show this help message and exit")
@@ -41,7 +40,7 @@ def get_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-@timeit(custom_print="{func_name} took {duration:2.5f} to run!")
+@timeit(custom_print="{func_name} took {duration:2.5f} sec(s) to run!")
 def main():
     """This is the main function of main.py
 
@@ -53,7 +52,7 @@ def main():
 
     # Initializing
     args = get_args()
-    ColorizedLogger.setup_logger(log_path=args.log, debug=args.debug)
+    ColorizedLogger.setup_logger(log_path=args.log, debug=args.debug, clear_log=True)
     # Load the configuration
     # configuration = Configuration(config_src=args.config_file,
     #                               config_schema_path='yml_schema_strict.json')
@@ -68,10 +67,12 @@ def main():
     basic_logger.nl(num_lines=2)
     # Example timeit code block
     basic_logger.info("Lastly, you can use timeit either as a function Wrapper or a ContextManager:")
-    custom_print = "Iterating in a 10,000-number-range took {duration:2.5f} seconds."
-    with timeit(custom_print=custom_print):
-        for _ in range(10000):
-            pass
+    for i in range(5):
+        custom_print = f"{i}: " + "Iterating in a 10,000-number-range took {duration:2.5f} seconds."
+        skip = i in [1, 2, 3]
+        with timeit(custom_print=custom_print, skip=skip):
+            for _ in range(10000):
+                pass
 
 
 if __name__ == '__main__':
