@@ -53,7 +53,7 @@ cookiecutter:
 clean:
 	@echo "Cleaning the template files.."
 	$(MAKE) delete_env
-	@rm -rf .gitignore cookiecutter.json LICENSE Makefile README.md requirements.txt TODO.md "{{cookiecutter.package_title_name}}"
+	@rm -rf .gitignore cookiecutter.json img LICENSE Makefile README.md requirements.txt TODO.md "{{cookiecutter.package_title_name}}"
 	@generated_project=$$( find . -name * ) && \
 		cp -a $${generated_project}/* . && \
 		rm -rf $${generated_project}
