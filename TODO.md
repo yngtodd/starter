@@ -14,3 +14,5 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] setuplog and get_args shouldn't be protected members
 - [X] Modify the __init__s and optimize imports
 - [X] Add a template guide and/or make script that auto changes the template (cookiecutter?)
+- [ ] Modify timeit to be skippable, able to write to file
+- [ ] Logger option to overwrite log file

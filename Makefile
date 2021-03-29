@@ -28,7 +28,7 @@ help:
 	@echo "make cookiecutter"
 	@echo "       Run cookiecutter and generate a project from the template"
 	@echo "make clean"
-	@echo "       Not Yet Supported"
+	@echo "       Clean the cookiecutter files and directories"
 	@echo "-----------------------------------------------------------------------------------------------------------"
 install:
 	$(MAKE) delete_env
