@@ -26,7 +26,7 @@ There are 2 ways to use this template:
 1. Just open a command line and run:
 
 ```ShellSession
-cookiecutter git@github.com:drkostas/starter.git
+cookiecutter https://github.com/drkostas/starter.git
 ```
 
 <i>You have to have cookiecutter installed first of course. If you don't,
