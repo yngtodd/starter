@@ -18,7 +18,7 @@ help:
 	@echo "make help"
 	@echo "       Display this message"
 	@echo "make install"
-	@echo "       Call delete_conda_env, create_conda_env, cookiecutter, requirements, and clean"
+	@echo "       Call delete_env, create_env, cookiecutter, requirements, and clean"
 	@echo "make delete_env"
 	@echo "       Delete the current conda env or virtualenv"
 	@echo "make create_env"

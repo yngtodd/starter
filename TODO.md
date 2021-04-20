@@ -16,3 +16,5 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Add a template guide and/or make script that auto changes the template (cookiecutter?)
 - [X] Modify timeit to be skippable, and able to write to file
 - [X] Logger option to overwrite log file
+- [ ] Modify timeit to skip more parts of the code when skip=True
+- [ ] Create `profileit` decorator/contextmanager
