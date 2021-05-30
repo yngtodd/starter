@@ -35,7 +35,7 @@ install:
 	$(MAKE) create_env
 	$(MAKE) requirements
 	$(MAKE) cookiecutter
-	$(MAKE) clean
+	#$(MAKE) clean
 	@echo "Installation Successful!"
 delete_env:
 	@echo "Deleting virtual environment.."

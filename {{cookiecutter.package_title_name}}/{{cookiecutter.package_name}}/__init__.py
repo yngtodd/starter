@@ -2,6 +2,7 @@
 
 from {{cookiecutter.package_name}}.fancy_logger import ColorizedLogger
 from {{cookiecutter.package_name}}.timing_tools import timeit
+from {{cookiecutter.package_name}}.profiling_funcs import profileit
 from {{cookiecutter.package_name}}.configuration import Configuration, validate_json_schema
 
 __author__ = "{{cookiecutter.author}}"

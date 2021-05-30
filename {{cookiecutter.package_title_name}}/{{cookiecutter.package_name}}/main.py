@@ -1,7 +1,7 @@
 import traceback
 import argparse
 
-from {{cookiecutter.package_name}} import Configuration, ColorizedLogger, timeit
+from {{cookiecutter.package_name}} import Configuration, ColorizedLogger, timeit, profileit
 
 basic_logger = ColorizedLogger(logger_name='Main', color='yellow')
 fancy_logger = ColorizedLogger(logger_name='FancyMain',
@@ -66,13 +66,18 @@ def main():
     basic_logger.info("If you want to print complete blank lines use nl(num_lines=<#>):")
     basic_logger.nl(num_lines=2)
     # Example timeit code block
-    basic_logger.info("Lastly, you can use timeit either as a function Wrapper or a ContextManager:")
+    basic_logger.info("You can use timeit either as a function Wrapper or a ContextManager:")
     for i in range(5):
         custom_print = f"{i}: " + "Iterating in a 10,000-number-range took {duration:2.5f} seconds."
         skip = i in [1, 2, 3]
         with timeit(custom_print=custom_print, skip=skip):
             for _ in range(10000):
                 pass
+    # Example profileit code block
+    basic_logger.info(
+        "Lastly, you can use profileit either as a function Wrapper or a ContextManager:")
+    with profileit():
+        x = sum([i % (i - 1) for i in range(12, 100000, 4)])
 
 
 if __name__ == '__main__':

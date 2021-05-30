@@ -74,7 +74,8 @@ def main():
             for _ in range(10000):
                 pass
     # Example profileit code block
-    basic_logger.info("Lastly, you can use profileit either as a function Wrapper or a ContextManager:")
+    basic_logger.info(
+        "Lastly, you can use profileit either as a function Wrapper or a ContextManager:")
     with profileit():
         x = sum([i % (i - 1) for i in range(12, 100000, 4)])
 

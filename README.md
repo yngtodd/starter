@@ -58,6 +58,12 @@ Just execute the following command and fill in the project variables that will b
 $ make install
 ```
 
+To delete the cookiecutter directory run:
+
+```ShellSession
+$ make clean
+```
+
 ## TODO <a name = "todo"></a>
 
 Read the [TODO](TODO.md) to see the current task list.

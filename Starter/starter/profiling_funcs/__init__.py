@@ -1,4 +1,4 @@
-"""Timeit sub-package of Starter."""
+"""Profileit sub-package of Starter."""
 
 from .profileit import profileit
 
