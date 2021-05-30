@@ -16,6 +16,6 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Add a template guide and/or make script that auto changes the template (cookiecutter?)
 - [X] Modify timeit to be skippable, and able to write to file
 - [X] Logger option to overwrite log file
-- [ ] Create `profileit` decorator/contextmanager
-- [ ] Modify timeit to skip more parts of the code when skip=True
+- [X] Create `profileit` decorator/contextmanager
+- [X] Modify timeit to skip more parts of the code when skip=True
 - [ ] Add db, cloudstore packages from the old template project

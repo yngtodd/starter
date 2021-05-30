@@ -1,5 +1,5 @@
 from contextlib import ContextDecorator
-from typing import Callable, IO
+from typing import Callable, IO, Union
 from functools import wraps
 from time import time
 
@@ -14,12 +14,20 @@ class timeit(ContextDecorator):
     file: IO
 
     def __init__(self, **kwargs):
-        """Decorator/ContextManager for counting the execution times of functions
+        """Decorator/ContextManager for counting the execution times of functions and code blocks
 
         Args:
-            custom_print: Custom print string which can be formatted using `func_name`, `args`,
-                          and `duration`. Use {0}, {1}, .. to reference the first, second, ... argument
+            custom_print: Custom print string Use {duration} to reference the running time.
+                          When used as decorator it can also be formatted using
+                          `func_name`, `args`, and {0}, {1}, .. to reference the function's
+                          first, second, ... argument.
+            skip: If True, don't time this time. Suitable when inside loops
+            file: Write the timing output to a file too
         """
+
+        self.total = None
+        self.skip = False
+        self.internal_only = False
         self.__dict__.update(kwargs)
 
     def __call__(self, func: Callable):
@@ -41,12 +49,16 @@ class timeit(ContextDecorator):
         return timed
 
     def __enter__(self, *args, **kwargs):
-        self.ts = time()
+        if not self.skip:
+            self.ts = time()
         return self
 
     def __exit__(self, type, value, traceback):
+        if self.skip:
+            return
+
         self.te = time()
-        total = self.te - self.ts
+        self.total = self.te - self.ts
         if hasattr(self, 'func_name'):
             if not hasattr(self, 'custom_print'):
                 print_string = 'Func: {func_name!r} with args: {args!r} took: {duration:2.5f} sec(s)'
@@ -54,7 +66,7 @@ class timeit(ContextDecorator):
                 print_string = self.custom_print
             time_logger.info(print_string.format(*self.args, func_name=self.func_name,
                                                  args=self.all_args,
-                                                 duration=total,
+                                                 duration=self.total,
                                                  **self.kwargs))
         else:
             if not hasattr(self, 'custom_print'):
@@ -62,9 +74,6 @@ class timeit(ContextDecorator):
             else:
                 print_string = self.custom_print
             if hasattr(self, 'file'):
-                self.file.write(print_string.format(duration=total))
-            if hasattr(self, 'skip'):
-                if not self.skip:
-                    time_logger.info(print_string.format(duration=total))
-            else:
-                time_logger.info(print_string.format(duration=total))
+                self.file.write(print_string.format(duration=self.total))
+            if not self.internal_only:
+                time_logger.info(print_string.format(duration=self.total))
