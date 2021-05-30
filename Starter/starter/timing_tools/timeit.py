@@ -1,5 +1,5 @@
 from contextlib import ContextDecorator
-from typing import Callable, IO, Union
+from typing import Callable, IO
 from functools import wraps
 from time import time
 
