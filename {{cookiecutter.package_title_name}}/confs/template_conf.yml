@@ -1,9 +1,18 @@
 tag: template
-example_db:
-  - properties:
-      hostname: example.host.name
-      username: my_name
-      password: my_pass
-      db_name: my_db1
-      port: 3306
-    type: mysql
+cloudstore:
+  - config:
+      api_key: yourapikey
+    type: dropbox
+#datastore:
+#  - config:
+#      hostname: hostname
+#      username: username
+#      password: pass
+#      db_name: my)db
+#      port: 3306
+#    type: mysql
+#email_app:
+#  - config:
+#      email_address: foo@gmail.com
+#      api_key: 123
+#    type: gmail
