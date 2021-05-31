@@ -1,3 +1,4 @@
+dropbox~=11.10.0
 jsonschema~=3.2.0
 PyYAML~=5.4.1
 setuptools~=52.0.0
