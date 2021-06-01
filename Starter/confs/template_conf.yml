@@ -3,16 +3,16 @@ cloudstore:
   - config:
       api_key: yourapikey
     type: dropbox
-#datastore:
-#  - config:
-#      hostname: hostname
-#      username: username
-#      password: pass
-#      db_name: my)db
-#      port: 3306
-#    type: mysql
-#email_app:
-#  - config:
-#      email_address: foo@gmail.com
-#      api_key: 123
-#    type: gmail
+datastore:
+  - config:
+      hostname: hostname
+      username: username
+      password: pass
+      db_name: mydb
+      port: 3306
+    type: mysql
+email_app:
+  - config:
+      email_address: foo@gmail.com
+      api_key: 123
+    type: gmail
