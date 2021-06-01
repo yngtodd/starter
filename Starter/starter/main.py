@@ -2,7 +2,7 @@ import traceback
 import argparse
 
 from starter import Configuration, ColorizedLogger, timeit, profileit, \
-    DropboxCloudstore, MySqlDatastore
+    DropboxCloudstore, MySqlDatastore, GmailEmailer
 
 basic_logger = ColorizedLogger(logger_name='Main', color='yellow')
 fancy_logger = ColorizedLogger(logger_name='FancyMain',
@@ -78,17 +78,25 @@ def main():
     basic_logger.info(
         "Lastly, you can use profileit either as a function Wrapper or a ContextManager:")
     with profileit():
-        x = sum([i % (i - 1) for i in range(12, 100000, 4)])
-    # CloudStore
-    cloud_conf = configuration.get_config('cloudstore')[0]
-    if cloud_conf['type'] == 'dropbox' and cloud_conf['config']['api_key'] != 'DROPBOX_API_KEY':
-        dropbox_obj = DropboxCloudstore(config=cloud_conf['config'])
-        basic_logger.info(f"Base folder contents in dropbox:\n{dropbox_obj.ls().keys()}")
-    # MySqlDatastore
-    cloud_conf = configuration.get_config('datastore')[0]
-    if cloud_conf['type'] == 'mysql' and cloud_conf['config']['username'] != 'MYSQL_USERNAME':
-        mysql_obj = MySqlDatastore(config=cloud_conf['config'])
-        basic_logger.info(f"List of tables in DB:\n{mysql_obj.show_tables()}")
+        # CloudStore
+        cloud_conf = configuration.get_config('cloudstore')[0]
+        if cloud_conf['type'] == 'dropbox' and cloud_conf['config']['api_key'] != 'DROPBOX_API_KEY':
+            dropbox_obj = DropboxCloudstore(config=cloud_conf['config'])
+            basic_logger.info(f"Base folder contents in dropbox:\n{dropbox_obj.ls().keys()}")
+        # MySqlDatastore
+        cloud_conf = configuration.get_config('datastore')[0]
+        if cloud_conf['type'] == 'mysql' and cloud_conf['config']['username'] != 'MYSQL_USERNAME':
+            mysql_obj = MySqlDatastore(config=cloud_conf['config'])
+            basic_logger.info(f"List of tables in DB:\n{mysql_obj.show_tables()}")
+        # GmailEmailer
+        cloud_conf = configuration.get_config('emailer')[0]
+        if cloud_conf['type'] == 'gmail' and cloud_conf['config']['api_key'] != 'GMAIL_API_KEY':
+            basic_logger.info(f"Sending Sample Email to the email address set..")
+            gmail_obj = GmailEmailer(config=cloud_conf['config'])
+            gmail_obj.send_email(subject='starter',
+                                 to=[gmail_obj.email_address],
+                                 text='GmailEmailer works!')
+            basic_logger.info(f"Done!")
 
 
 if __name__ == '__main__':

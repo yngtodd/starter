@@ -1,4 +1,5 @@
 dropbox~=11.10.0
+gmail~=0.6.3
 jsonschema~=3.2.0
 mysql-connector-python~=8.0.19
 mysql-connector~=2.2.9
