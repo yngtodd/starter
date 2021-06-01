@@ -11,7 +11,7 @@ datastore:
       db_name: !ENV ${MYSQL_DB_NAME}
       port: 3306
     type: mysql
-email_app:
+emailer:
   - config:
       email_address: !ENV ${EMAIL_ADDRESS}
       api_key: !ENV ${GMAIL_API_KEY}

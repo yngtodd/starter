@@ -6,6 +6,7 @@ from {{cookiecutter.package_name}}.profiling_funcs import profileit
 from {{cookiecutter.package_name}}.configuration import Configuration, validate_json_schema
 from {{cookiecutter.package_name}}.cloudstore import DropboxCloudstore
 from {{cookiecutter.package_name}}.datastore import MySqlDatastore
+from {{cookiecutter.package_name}}.emailer import GmailEmailer
 
 __author__ = "{{cookiecutter.author}}"
 __email__ = "{{cookiecutter.author_email}}"
