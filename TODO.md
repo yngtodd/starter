@@ -18,4 +18,4 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Logger option to overwrite log file
 - [X] Create `profileit` decorator/contextmanager
 - [X] Modify timeit to skip more parts of the code when skip=True
-- [ ] Add db, cloudstore packages from the old template project
+- [X] Add db, cloudstore packages from the old template project
