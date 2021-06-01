@@ -51,6 +51,17 @@ $ echo $SHELL
 
 ```
 
+If you want to usy any of the Gmail, Dropbox, Mysql packages you should set up some of:
+- Gmail: An application-specific password for your Google account. 
+[Reference 1](https://support.google.com/mail/?p=InvalidSecondFactor), 
+[Reference 2](https://security.google.com/settings/security/apppasswords) 
+- Dropbox: An Api key for your Dropbox account. 
+[Reference 1](http://99rabbits.com/get-dropbox-access-token/), 
+[Reference 2](https://dropbox.tech/developers/generate-an-access-token-for-your-own-account) 
+- MySql: If you haven't any, you can create a free one on Amazon RDS. 
+[Reference 1](https://aws.amazon.com/rds/free/), 
+[Reference 2](https://bigdataenthusiast.wordpress.com/2016/03/05/aws-rds-instance-setup-oracle-db-on-cloud-free-tier/) 
+
 ## Installing, Testing, Building <a name = "installing"></a>
 
 All the installation steps are being handled by the [Makefile](Makefile). The `server=local` flag
@@ -136,19 +147,28 @@ file directly or invoke its console script.
 
 ### Modifying the Configuration <a name = "configuration"></a>
 
-There is an already configured yml file under [confs/template_conf.yml](confs/template_conf.yml) with
+There is two already configured yml files under [confs/template_conf.yml](confs/template_conf.yml) with
 the following structure:
 
 ```yaml
-tag: template
-example_db:
-  - config:
-      hostname: example.host.name
-      username: my_name
-      password: !ENV ${PASS}
-      db_name: my_db1
-      port: 3306
-    type: mysql
+tag: production
+cloudstore:
+  config:
+    api_key: !ENV ${DROPBOX_API_KEY}
+  type: dropbox
+datastore:
+  config:
+    hostname: !ENV ${MYSQL_HOST}
+    username: !ENV ${MYSQL_USERNAME}
+    password: !ENV ${MYSQL_PASSWORD}
+    db_name: !ENV ${MYSQL_DB_NAME}
+    port: 3306
+  type: mysql
+email_app:
+  config:
+    email_address: !ENV ${EMAIL_ADDRESS}
+    api_key: !ENV ${GMAIL_API_KEY}
+  type: gmail
 ```
 
 The `!ENV` flag indicates that you are passing an environmental value to this attribute. You can change
@@ -162,7 +182,13 @@ In order to run the [main.py](starter/main.py)  you will need to set the
 environmental variables you are using in your configuration yml file. Example:
 
 ```ShellSession
-$ export PASS=my_password
+$ export DROPBOX_API_KEY=123
+$ export MYSQL_HOST=foo.rds.amazonaws.com
+$ export MYSQL_USERNAME=user
+$ export MYSQL_PASSWORD=pass
+$ export MYSQL_DB_NAME=Test_schema
+$ export EMAIL_ADDRESS=Gmail Bot <foobar@gmail.com>
+$ export GMAIL_API_KEY=123
 ```
 
 The best way to do that, is to create a .env file ([example](env_example)), and source it before
@@ -273,6 +299,8 @@ Read the [TODO](TODO.md) to see the current task list.
 
 ## Built With <a name = "built_with"></a>
 
+* [Dropbox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
+* [Gmail Sender](https://github.com/paulc/gmail-sender) - Used for the EmailApp Class
 * [Heroku](https://www.heroku.com) - The deployment environment
 * [CircleCI](https://www.circleci.com/) - Continuous Integration service
 
