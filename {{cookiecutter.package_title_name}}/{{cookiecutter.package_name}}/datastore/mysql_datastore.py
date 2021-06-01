@@ -4,7 +4,7 @@ from mysql import connector as mysql_connector
 import mysql.connector.cursor
 
 from .abstract_datastore import AbstractDatastore
-from starter import ColorizedLogger
+from {{cookiecutter.package_name}} import ColorizedLogger
 
 logger = ColorizedLogger('MySqlDataStore')
 
