@@ -42,7 +42,9 @@ COMMANDS = [
     'starter_main = starter.main:main'
 ]
 
-data_files = ['starter/configuration/yml_schema.json']
+data_files = [
+    # 'starter/a-file'
+]
 
 setup(
     author="drkostas",

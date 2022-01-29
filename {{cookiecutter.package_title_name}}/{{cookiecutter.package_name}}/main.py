@@ -1,14 +1,14 @@
 import traceback
 import argparse
 
-from {{cookiecutter.package_name}} import Configuration, ColorizedLogger, timeit, profileit, \
-    DropboxCloudstore, MySqlDatastore, GmailEmailer
+from {{cookiecutter.package_name}} import Configuration, ColorLogger, timeit, profileit, \
+    DropboxCloudManager, HighMySQL, GmailPyEmailSender
 
-basic_logger = ColorizedLogger(logger_name='Main', color='yellow')
-fancy_logger = ColorizedLogger(logger_name='FancyMain',
-                               color='blue',
-                               on_color='on_red',
-                               attrs=['underline', 'reverse', 'bold'])
+basic_logger = ColorLogger(logger_name='Main', color='yellow')
+fancy_logger = ColorLogger(logger_name='FancyMain',
+                           color='blue',
+                           on_color='on_red',
+                           attrs=['underline', 'reverse', 'bold'])
 
 
 def get_args() -> argparse.Namespace:
@@ -18,7 +18,7 @@ def get_args() -> argparse.Namespace:
         argparse.Namespace:
     """
     parser = argparse.ArgumentParser(
-        description='A template for python projects.',
+        description='{{cookiecutter.package_description}}',
         add_help=False)
     # Required Args
     required_args = parser.add_argument_group('Required Arguments')
@@ -53,7 +53,7 @@ def main():
 
     # Initializing
     args = get_args()
-    ColorizedLogger.setup_logger(log_path=args.log, debug=args.debug, clear_log=True)
+    ColorLogger.setup_logger(log_path=args.log, debug=args.debug, clear_log=True)
     # Load the configuration
     # configuration = Configuration(config_src=args.config_file,
     #                               config_schema_path='yml_schema_strict.json')
@@ -78,21 +78,21 @@ def main():
     basic_logger.info(
         "Lastly, you can use profileit either as a function Wrapper or a ContextManager:")
     with profileit():
-        # CloudStore
-        cloud_conf = configuration.get_config('cloudstore')[0]
+        # DropboxCloudManager
+        cloud_conf = configuration.get_config('cloud-filemanager')[0]
         if cloud_conf['type'] == 'dropbox' and cloud_conf['config']['api_key'] != 'DROPBOX_API_KEY':
-            dropbox_obj = DropboxCloudstore(config=cloud_conf['config'])
+            dropbox_obj = DropboxCloudManager(config=cloud_conf['config'])
             basic_logger.info(f"Base folder contents in dropbox:\n{dropbox_obj.ls().keys()}")
-        # MySqlDatastore
-        cloud_conf = configuration.get_config('datastore')[0]
+        # HighMySQL
+        cloud_conf = configuration.get_config('high-sql')[0]
         if cloud_conf['type'] == 'mysql' and cloud_conf['config']['username'] != 'MYSQL_USERNAME':
-            mysql_obj = MySqlDatastore(config=cloud_conf['config'])
+            mysql_obj = HighMySQL(config=cloud_conf['config'])
             basic_logger.info(f"List of tables in DB:\n{mysql_obj.show_tables()}")
-        # GmailEmailer
-        cloud_conf = configuration.get_config('emailer')[0]
-        if cloud_conf['type'] == 'gmail' and cloud_conf['config']['api_key'] != 'GMAIL_API_KEY':
+        # GmailPyEmailSender
+        mail_conf = configuration.get_config('pyemail-sender')[0]
+        if cloud_conf['type'] == 'gmail' and mail_conf['config']['api_key'] != 'GMAIL_API_KEY':
             basic_logger.info(f"Sending Sample Email to the email address set..")
-            gmail_obj = GmailEmailer(config=cloud_conf['config'])
+            gmail_obj = GmailEmailer(config=mail_conf['config'])
             gmail_obj.send_email(subject='starter',
                                  to=[gmail_obj.email_address],
                                  text='GmailEmailer works!')

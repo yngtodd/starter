@@ -42,7 +42,9 @@ COMMANDS = [
     '{{cookiecutter.package_name}}_main = {{cookiecutter.package_name}}.main:main'
 ]
 
-data_files = ['{{cookiecutter.package_name}}/configuration/yml_schema.json']
+data_files = [
+    # '{{cookiecutter.package_name}}/a-file'
+]
 
 setup(
     author="{{cookiecutter.author}}",

@@ -19,3 +19,14 @@ See the [issues](https://github.com/drkostas/starter/issues) too.
 - [X] Create `profileit` decorator/contextmanager
 - [X] Modify timeit to skip more parts of the code when skip=True
 - [X] Add db, cloudstore packages from the old template project
+- [X] Upload packages to pypi and import them
+- [ ] Change Makefile to echo the name of env after install
+- [ ] Put quote in the env file values. Do the same for the packages
+- [ ] Change the Makefile based on the addition you made on other projects
+- [ ] On MySQL datastore, add option to set primary key
+- [ ] On MySQL datastore, add options for group by and join
+- [ ] Add skip option to logger
+- [ ] Make top-level inits more abstract (for cookiecutter)
+- [ ] Configurable python_requires and classifiers in setup.py
+- [ ] Change the readme and makefile to use env=venv or conda
+- [ ] Change the acknowledgements
